@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Androidonator https://github.com/Androidonator/",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "medbaysterile0",
+      "directions": 4
+    },
+    {
+      "name": "medbaysterile1",
+      "directions": 4
+    },
+    {
+      "name": "medbaysterile2",
+      "directions": 4
+    },
+    {
+      "name": "medbaysterile3",
+      "directions": 4
+    },
+    {
+      "name": "medbaysterile4",
+      "directions": 4
+    },
+    {
+      "name": "medbaysterile5",
+      "directions": 4
+    },
+    {
+      "name": "medbaysterile6",
+      "directions": 4
+    },
+    {
+      "name": "medbaysterile7",
+      "directions": 4
+    }
+  ]
+}
