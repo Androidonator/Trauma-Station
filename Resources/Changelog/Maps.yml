@@ -1,5 +1,4 @@
-Order: 1
-# Do NOT put anything after the Entries section, in order to prevent merge conflict with new CL entries
+Order: 2
 Entries:
 - author: ArtisticRoomba
   changes:
