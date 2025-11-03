@@ -7,9 +7,9 @@
     sprite: _Trauma/Structures/Walls/medbaysterile.rsi
   - type: Icon
     sprite: _Trauma/Structures/Walls/medbaysterile.rsi
-  #- type: Construction
-  #  graph: Girder
-  #  node: silverWall
+  - type: Construction
+    graph: Girder
+    node: WallMedbaySterile
   - type: RCDDeconstructable
     cost: 6
     delay: 8

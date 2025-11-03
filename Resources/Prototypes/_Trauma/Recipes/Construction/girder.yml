@@ -1,0 +1,13 @@
+
+
+- node: medbaySterileWall
+  entity: WallMedbaySterile
+  edges:
+  - to: girder
+    completed:
+    - !type:GivePrototype
+      prototype: MaterialSheetPlastic1
+      amount: 2
+    steps:
+    - tool: Prying
+      doAfter: 5
