@@ -8,15 +8,18 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Actions;
 using Content.Shared.Administration.Systems;
+using Content.Shared.Mobs.Systems;
 
 namespace Content.Goobstation.Server.Slasher.Systems;
 
+// TODO: this can all go in shared
 public sealed class SlasherRegenerateSystem : EntitySystem
 {
     [Dependency] private readonly SharedSolutionContainerSystem _solutions = default!;
     [Dependency] private readonly SharedCuffableSystem _cuffs = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
 
     public override void Initialize()
     {
