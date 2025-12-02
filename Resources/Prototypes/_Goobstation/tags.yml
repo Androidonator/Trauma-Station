@@ -325,6 +325,9 @@
   id: HEVSuit
 
 - type: Tag
+  id: Holosign
+
+- type: Tag
   id: HolyClaymore
 
 - type: Tag
