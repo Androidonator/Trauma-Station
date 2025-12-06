@@ -1,9 +1,11 @@
-﻿using Content.Shared._Lavaland.Procedural.Prototypes;
+using Content.Shared._Lavaland.Procedural.Prototypes;
 using Robust.Shared.Prototypes;
 
-// ReSharper disable once CheckNamespace
-namespace Content.Server.Maps;
+namespace Content.Shared.Maps;
 
+/// <summary>
+/// Trauma - store lavaland planets for each map
+/// </summary>
 public sealed partial class GameMapPrototype
 {
     /// <summary>
