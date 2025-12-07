@@ -15,6 +15,7 @@ using Content.Goobstation.Shared.Flashbang;
 using Content.Goobstation.Shared.Stunnable;
 using Content.Shared._Goobstation.Wizard.Chuuni;
 using Content.Shared._White.Standing;
+using Content.Shared.Chat.RadioIconsEvents;
 using Content.Shared.Flash;
 using Content.Shared.Heretic;
 using Content.Shared.Inventory;
@@ -42,6 +43,7 @@ public partial class GoobInventorySystem
         SubscribeLocalEvent<InventoryComponent, IsEyesCoveredCheckEvent>(RelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<Overlays.NightVisionComponent>>(RefRelayInventoryEvent);
         SubscribeLocalEvent<InventoryComponent, RefreshEquipmentHudEvent<Overlays.ThermalVisionComponent>>(RefRelayInventoryEvent);
+        SubscribeLocalEvent<InventoryComponent, TransformSpeakerJobIconEvent>(RefRelayInventoryEvent);
     }
 
     private void RefRelayInventoryEvent<T>(EntityUid uid, InventoryComponent component, ref T args) where T : IInventoryRelayEvent
