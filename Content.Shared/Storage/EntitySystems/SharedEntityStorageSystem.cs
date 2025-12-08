@@ -24,7 +24,6 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using Content.Shared.Materials;
 
 namespace Content.Shared.Storage.EntitySystems;
 
@@ -44,15 +43,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     [Dependency] private   readonly WeldableSystem _weldable = default!;
     [Dependency] private readonly EntityWhitelistSystem _whitelistSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
-
-    // <Trauma> - lmao chud copy pasted subs into each system when the handlers are in shared
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<EntityStorageComponent, GotReclaimedEvent>(OnReclaimed);
-    }
-    // </Trauma>
 
     public const string ContainerName = "entity_storage";
 
@@ -511,14 +501,4 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     protected virtual void TakeGas(EntityUid uid, EntityStorageComponent component) { }
 
     public virtual void ReleaseGas(EntityUid uid, EntityStorageComponent component) { }
-
-    // Goobstation - Recycle update - Empty container in recycle
-    // TODO: move this shit to goobmod bruh
-    private void OnReclaimed(Entity<EntityStorageComponent> ent, ref GotReclaimedEvent args)
-    {
-        if (ent.Comp.DeleteContentsOnDestruction)
-            return;
-
-        _container.EmptyContainer(ent.Comp.Contents, destination: args.ReclaimerCoordinates);
-    }
 }

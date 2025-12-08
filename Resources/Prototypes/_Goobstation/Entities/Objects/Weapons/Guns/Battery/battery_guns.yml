@@ -126,7 +126,7 @@
     fireRate: 1.5
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 600
     startingCharge: 600
   - type: MaterialEnergy
@@ -154,7 +154,7 @@
   id: WeaponPlasmaRifleEmpty
   suffix: Empty
   components:
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 600
     startingCharge: 0
 
@@ -345,7 +345,7 @@
       path: /Audio/_DV/Weapons/Guns/Gunshots/laser.ogg
     soundEmpty:
       path: /Audio/_DV/Weapons/Guns/Empty/dry_fire.ogg
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 1000
     startingCharge: 1000
   - type: BatteryAmmoProvider
@@ -420,7 +420,6 @@
     repeatable: true
   - type: PredictedBatterySelfRecharger
     autoRechargeRate: 50
-    autoRechargePause: true
     autoRechargePauseTime: 40
 
 - type: entity
@@ -459,6 +458,6 @@
   - type: BatteryAmmoProvider
     proto: RifleBulletEnergyGunIon # yes i just copy cr-2 ion bullet
     fireCost: 40
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 800
     startingCharge: 800

@@ -114,15 +114,15 @@ public sealed class SiliconChargeSystem : EntitySystem
 
             // Ensures that the drain rate is at least 10% of normal,
             // and would allow at least 4 minutes of life with a max charge, to prevent cheese.
+            var batt = battery.Value.AsNullable();
             var batteryComp = battery.Value.Comp;
-            var batteryEnt = battery.Value.Owner;
             drainRate += Math.Clamp(drainRateFinalAddi, drainRate * -0.9f, batteryComp.MaxCharge / 240);
 
             // Drain the battery.
-            _battery.TryUseCharge(batteryEnt.Value, frameTime * drainRate); // Goobstation - Use BatterySystem instead of PowerCellSystem
+            _battery.TryUseCharge(batt, frameTime * drainRate); // Goobstation - Use BatterySystem instead of PowerCellSystem
 
             // Figure out the current state of the Silicon.
-            var chargePercent = (short) MathF.Round(batteryComp.CurrentCharge / batteryComp.MaxCharge * 10f);
+            var chargePercent = (short) _battery.GetRemainingUses(batt, batteryComp.MaxCharge * 0.1f);
 
             UpdateChargeState(silicon, chargePercent, siliconComp);
         }

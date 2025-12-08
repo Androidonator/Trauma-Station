@@ -16,7 +16,7 @@ namespace Content.Shared._EinsteinEngines.Silicon.Death;
 /// </remarks>
 public abstract class SharedSiliconDeathSystem : EntitySystem
 {
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] protected readonly PowerCellSystem _powerCell = default!;
 
     public override void Initialize()
     {

@@ -1,5 +1,6 @@
 // <Trauma>
 using Content.Shared._CorvaxNext.Silicons.Borgs.Components;
+using Content.Shared.StationAi;
 // </Trauma>
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
@@ -284,7 +285,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
         // Corvax-Next-AiRemoteControl-Start
         if (chassis.Comp.BrainEntity == null && aiBrain != null && _whitelist.IsWhitelistPassOrNull(chassis.Comp.BrainWhitelist, used))
         {
-            EnsureComp<AiRemoteControllerComponent>(uid);
+            EnsureComp<AiRemoteControllerComponent>(chassis);
             _container.Insert(used, chassis.Comp.BrainContainer);
             _adminLog.Add(LogType.Action, LogImpact.Medium,
                 $"{ToPrettyString(args.User):player} installed ai remote brain {ToPrettyString(used)} into borg {ToPrettyString(chassis)}");

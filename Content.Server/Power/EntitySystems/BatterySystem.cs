@@ -48,7 +48,8 @@ public sealed partial class BatterySystem : SharedBatterySystem
 
     private void OnInit(Entity<BatteryComponent> ent, ref ComponentInit args)
     {
-        DebugTools.Assert(!HasComp<PredictedBatteryComponent>(ent), $"{ent} has both BatteryComponent and PredictedBatteryComponent");
+        // Trauma - added ToPrettyString
+        DebugTools.Assert(!HasComp<PredictedBatteryComponent>(ent), $"{ToPrettyString(ent)} has both BatteryComponent and PredictedBatteryComponent");
     }
     private void OnNetBatteryRejuvenate(Entity<PowerNetworkBatteryComponent> ent, ref RejuvenateEvent args)
     {

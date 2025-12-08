@@ -164,7 +164,7 @@
         startValue: 0.1
         endValue: 2.0
         isLooped: true
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
     startingCharge: 600
   - type: PredictedBatterySelfRecharger
@@ -275,7 +275,7 @@
         startValue: 0.1
         endValue: 2.0
         isLooped: true
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
     startingCharge: 600
   - type: PredictedBatterySelfRecharger
@@ -372,7 +372,7 @@
         startValue: 0.1
         endValue: 2.0
         isLooped: true
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
     startingCharge: 600
   - type: PredictedBatterySelfRecharger
@@ -452,7 +452,7 @@
         startValue: 0.1
         endValue: 2.0
         isLooped: true
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
     startingCharge: 600
   - type: PredictedBatterySelfRecharger
@@ -536,7 +536,7 @@
         startValue: 0.1
         endValue: 2.0
         isLooped: true
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
     startingCharge: 600
   - type: PredictedBatterySelfRecharger
@@ -635,7 +635,7 @@
         startValue: 0.1
         endValue: 2.0
         isLooped: true
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
     startingCharge: 600
   - type: PredictedBatterySelfRecharger
@@ -725,7 +725,7 @@
         startValue: 0.1
         endValue: 2.0
         isLooped: true
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
     startingCharge: 600
   - type: PredictedBatterySelfRecharger
@@ -830,7 +830,7 @@
         startValue: 0.1
         endValue: 2.0
         isLooped: true
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 600 #lights drain 3/s but recharge of 2 makes this 1/s. Therefore 600 is 10 minutes of light.
     startingCharge: 600
   - type: PredictedBatterySelfRecharger

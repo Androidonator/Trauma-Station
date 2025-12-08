@@ -545,11 +545,14 @@
   components:
   - type: EntityTableContainerFill
     containers:
-      entity_storage:
-        id: BikeHornImplanter
-        amount: 3
-      - id: BikeHorn
-        amount: 3
+      # <Goob> - AllSelector, add bike horns
+      entity_storage: !type:AllSelector
+        children:
+        - id: BikeHornImplanter
+          amount: 3
+        - id: BikeHorn
+          amount: 3
+      # </Goob>
 
 - type: entity
   parent: CratePlastic

@@ -72,7 +72,7 @@ public sealed partial class PowerCellSystem
         }
 
         // <Trauma> - use FindBatteryEvent as fallback
-        battery = FindBattery(uid);
+        battery = FindBattery(ent);
         return battery != null;
         // </Trauma>
     }

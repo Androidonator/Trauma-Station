@@ -1,5 +1,7 @@
 using Content.Shared.Containers.ItemSlots;
-using Content.Shared.Power.EntitySystems;
+using Content.Shared.Power.Components;
+using Content.Shared.PowerCell;
+using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 
 namespace Content.Trauma.Shared.Power;
@@ -19,9 +21,14 @@ public sealed class MagazineBatterySystem : EntitySystem
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, FindBatteryEvent>(OnFindBattery);
     }
 
-    private void OnFindBattery(Entity<MagazineAmmoProviderComponent> ent, ref FindBatteryEvent args)
+    private void OnFindBattery(EntityUid uid, MagazineAmmoProviderComponent comp, ref FindBatteryEvent args)
     {
-        // shitcode has the slot hardcoded everywhere i think so this is "fine"
-        args.FoundBattery ??= _slots.GetItemOrNull(ent.Owner, "gun_magazine");
+        if (args.FoundBattery == null ||
+            // shitcode has the slot hardcoded everywhere i think so this is "fine"
+            _slots.GetItemOrNull(uid, "gun_magazine") is not {} battery ||
+            !TryComp<PredictedBatteryComponent>(battery, out var batteryComp))
+            return;
+
+        args.FoundBattery = (battery, batteryComp);
     }
 }

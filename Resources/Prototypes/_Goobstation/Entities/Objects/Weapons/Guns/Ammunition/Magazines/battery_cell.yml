@@ -7,8 +7,6 @@
   abstract: true
   parent: BasePowerCell
   id: BaseMilitaryPowerCell
-  abstract: true
-  parent: BaseItem
   components:
   - type: Sprite
     layers:

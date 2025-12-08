@@ -262,7 +262,7 @@ public sealed partial class PTLSystem : EntitySystem
                 continue;
 
             hitscan.Damage *= modifier;
-            Dirty(ammo, hitscan);
+            Dirty(ammo.Value, hitscan);
         }
     }
 }

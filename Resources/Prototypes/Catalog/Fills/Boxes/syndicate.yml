@@ -25,10 +25,7 @@
     containers:
       storagebase: !type:AllSelector
         children:
-        # <Goob>
-        - id: TimerTrigger
-        - id: ChemicalPayload
-        # </Goob>
+        - id: ChemicalPayload # Goob
         - id: Beaker
           amount: 2
         - id: Dropper

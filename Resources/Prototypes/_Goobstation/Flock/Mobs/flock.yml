@@ -42,9 +42,8 @@
     proto: BulletFlock
     fireCost: 50
   - type: PredictedBatterySelfRecharger
-    autoRecharge: true
     autoRechargeRate: 50
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 1000
     startingCharge: 1000
   - type: Gun

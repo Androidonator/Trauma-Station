@@ -203,7 +203,7 @@ public sealed class AugmentPowerCellSystem : EntitySystem
             return false;
         }
 
-        if (!_battery.TryUseCharge(battery.Value, amount))
+        if (!_battery.TryUseCharge(battery.Value.AsNullable(), amount))
         {
             _popup.PopupClient(Loc.GetString("power-cell-insufficient"), body, body, PopupType.MediumCaution);
             return false;

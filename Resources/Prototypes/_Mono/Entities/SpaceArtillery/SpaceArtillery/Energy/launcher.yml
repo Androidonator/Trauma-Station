@@ -14,7 +14,7 @@
     - state: space_artillery
   - type: Appearance
   - type: AmmoCounter
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 2000
     startingCharge: 2000
   - type: ExaminableBattery
@@ -76,7 +76,7 @@
     - state: space_artillery
   - type: Appearance
   - type: AmmoCounter
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 3000
     startingCharge: 3000
   - type: ExaminableBattery
@@ -139,7 +139,7 @@
     state: space_artillery
   - type: Appearance
   - type: AmmoCounter
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 20000
     startingCharge: 20000
   - type: ExaminableBattery

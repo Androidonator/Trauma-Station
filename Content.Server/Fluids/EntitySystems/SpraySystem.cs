@@ -104,12 +104,12 @@ public sealed class SpraySystem : SharedSpraySystem
         var sprayOwner = entity.Owner;
         var solutionName = SprayComponent.SolutionName;
 
-        if (entity.Comp.ExternalContainer == true)
+        if (entity.Comp.ExternalContainer == true && user != null)
         {
             bool foundContainer = false;
 
             // Check held items (exclude nozzle)
-            foreach (var item in _hands.EnumerateHeld(user))
+            foreach (var item in _hands.EnumerateHeld(user.Value))
             {
                 if (item == entity.Owner)
                 {
@@ -127,7 +127,7 @@ public sealed class SpraySystem : SharedSpraySystem
             }
 
             // Fall back to target slot
-            if (!foundContainer && _inventory.TryGetContainerSlotEnumerator(user, out var enumerator, entity.Comp.TargetSlot))
+            if (!foundContainer && _inventory.TryGetContainerSlotEnumerator(user.Value, out var enumerator, entity.Comp.TargetSlot))
             {
                 while (enumerator.NextItem(out var item))
                 {
@@ -178,7 +178,7 @@ public sealed class SpraySystem : SharedSpraySystem
 
         // Lavaland Shitcode Start - You should spray yourself NOW.
         // Too lazy to learn this system, so you get a copypaste job!
-        if ((clickMapPos.Position - userMapPos.Position).Length() < 0.5f)
+        if ((clickMapPos.Position - sprayerMapPos.Position).Length() < 0.5f)
         {
             // Split a portion of the solution for the self-spray
             var adjustedSolutionAmount = entity.Comp.TransferAmount;
@@ -188,7 +188,7 @@ public sealed class SpraySystem : SharedSpraySystem
             {
                 // Spawn vapor with a slight offset to create movement
                 var offset = new Vector2(0.1f, 0); // Small offset to ensure collision
-                var vapor = Spawn(entity.Comp.SprayedPrototype, userMapPos.Offset(offset));
+                var vapor = Spawn(entity.Comp.SprayedPrototype, sprayerMapPos.Offset(offset));
                 var vaporXform = xformQuery.GetComponent(vapor);
 
                 if (TryComp(vapor, out AppearanceComponent? appearance))
@@ -205,22 +205,22 @@ public sealed class SpraySystem : SharedSpraySystem
                 var rotation = Angle.FromDegrees(45);
                 var impulseDirection = -offset.Normalized();
                 var time = 0.5f;  // Shorter duration for self-spray
-                var target = userMapPos.Offset(impulseDirection * 0.5f);  // Small movement distance
+                var target = sprayerMapPos.Offset(impulseDirection * 0.5f);  // Small movement distance
 
                 _vapor.Start(ent, vaporXform, impulseDirection * 0.5f, entity.Comp.SprayVelocity, target, time, user);
 
                 if (TryComp<PhysicsComponent>(user, out var body))
                 {
-                    if (_gravity.IsWeightless(user))
-                        _physics.ApplyLinearImpulse(user, -impulseDirection.Normalized() * entity.Comp.PushbackAmount, body: body);
-                }
+                    if (_gravity.IsWeightless(user.Value))
+                        _physics.ApplyLinearImpulse(user.Value, -impulseDirection.Normalized() * entity.Comp.PushbackAmount, body: body);
 
-                RaiseLocalEvent(user, new SprayUserImpulseEvent(-impulseDirection.Normalized() * entity.Comp.PushbackAmount)); // Goobstation - Vehicle Spray Pushback (Office chairs)
+                    RaiseLocalEvent(user.Value, new SprayUserImpulseEvent(-impulseDirection.Normalized() * entity.Comp.PushbackAmount)); // Goobstation - Vehicle Spray Pushback (Office chairs)
+                }
 
                 _audio.PlayPvs(entity.Comp.SpraySound, entity, entity.Comp.SpraySound.Params.WithVariation(0.125f));
 
-                if (useDelay != null)
-                    _useDelay.TryResetDelay((entity, useDelay));
+                if (TryComp<UseDelayComponent>(entity, out var useDelay))
+                    _useDelay.TryResetDelay((entity.Owner, useDelay));
 
                 return;
             }
@@ -315,7 +315,8 @@ public sealed class SpraySystem : SharedSpraySystem
             accumulatedVehiclePush += -impulseDirection * entity.Comp.PushbackAmount; // Goobstation - Vehicle Spray Pushback (Office chairs)
         }
 
-        RaiseLocalEvent(user, new SprayUserImpulseEvent(accumulatedVehiclePush));  // Goobstation - Vehicle Spray Pushback (Office chairs)
+        if (user != null)
+            RaiseLocalEvent(user.Value, new SprayUserImpulseEvent(accumulatedVehiclePush));  // Goobstation - Vehicle Spray Pushback (Office chairs)
 
         _audio.PlayPvs(entity.Comp.SpraySound, entity, entity.Comp.SpraySound.Params.WithVariation(0.125f));
 

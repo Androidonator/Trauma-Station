@@ -88,7 +88,7 @@
         startValue: 0.1
         endValue: 2.0
         isLooped: true
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 100
     startingCharge: 100
   - type: PredictedBatterySelfRecharger

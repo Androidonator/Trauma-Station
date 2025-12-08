@@ -293,7 +293,7 @@
     startingCharge: 720
   - type: PredictedBatterySelfRecharger
     autoRechargeRate: 12 # takes 1 minute to charge itself back to full
-    canEmp: true # Goob
+    #canEmp: true # Goob # TODO: reimplement this for predicted battery in a smart way
   # <Goob>
   - type: BatteryAmmoProvider
     proto: RedMediumLaser

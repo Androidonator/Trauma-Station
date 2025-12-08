@@ -67,7 +67,7 @@
   suffix: Battery
   id: MedicalBeamGunBattery
   components:
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 20
     startingCharge: 20
   - type: RechargeableBlocking
@@ -108,7 +108,7 @@
   id: MedicalBeamGunSyndicateBattery
   components:
   # Less overall battery, faster recharging
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 15
     startingCharge: 15
   - type: RechargeableBlocking

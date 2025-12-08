@@ -25,16 +25,17 @@ public sealed partial class DnaData : ReagentData
 
     public override bool Equals(ReagentData? other)
     {
-        // <Goob> - only cast once here, check freshness below
-        if (other is not DnaData data)
+        if (other == null)
+        {
             return false;
+        }
 
-        return data.DNA == DNA && data.Freshness == Freshness;
-        // </Goob>
+        return ((DnaData) other).DNA == DNA;
+        // Trauma note - Freshness is intentionally not checked as it would make the same persons blood not combine
     }
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(DNA, Freshness); // Goob - combine Freshness
+        return DNA.GetHashCode();
     }
 }

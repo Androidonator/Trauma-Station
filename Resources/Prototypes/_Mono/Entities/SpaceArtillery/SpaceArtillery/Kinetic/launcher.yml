@@ -12,7 +12,7 @@
     sprite: _Mono/Objects/ShuttleWeapons/50cal.rsi
     layers:
     - state: space_artillery
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 20000
     startingCharge: 20000
   - type: ExaminableBattery
@@ -69,7 +69,7 @@
     - state: space_artillery
   - type: Appearance
   - type: AmmoCounter
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 30000
     startingCharge: 30000
   - type: ExaminableBattery
@@ -116,7 +116,7 @@
     - state: space_artillery
   - type: Appearance
   - type: AmmoCounter
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 40000
     startingCharge: 40000
   - type: ExaminableBattery
@@ -168,7 +168,7 @@
     - state: space_artillery
   - type: Appearance
   - type: AmmoCounter
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 40000
     startingCharge: 40000
   - type: ExaminableBattery
@@ -216,7 +216,7 @@
     scale: 1, 1
   - type: Appearance
   - type: AmmoCounter
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 12000
     startingCharge: 12000
   - type: ExaminableBattery
@@ -280,7 +280,7 @@
     scale: 1.15, 1.15
   - type: Appearance
   - type: AmmoCounter
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 12000
     startingCharge: 12000
   - type: ExaminableBattery
@@ -343,7 +343,7 @@
     - state: space_artillery
   - type: Appearance
   - type: AmmoCounter
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 40000
     startingCharge: 40000
   - type: ExaminableBattery
@@ -419,7 +419,7 @@
     scale: 1, 1
   - type: Appearance
   - type: AmmoCounter
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 40000
     startingCharge: 40000
   - type: ExaminableBattery
@@ -445,7 +445,6 @@
       path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
   - type: PredictedBatterySelfRecharger
     autoRechargeRate: 12000
-    autoRechargePause: true
   - type: SpaceArtillery
     powerChargeRate: 800
     powerUsePassive: 1500
@@ -479,7 +478,7 @@
     scale: 1, 1
   - type: Appearance
   - type: AmmoCounter
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 40000
     startingCharge: 40000
   - type: ExaminableBattery
@@ -505,7 +504,6 @@
       path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
   - type: PredictedBatterySelfRecharger
     autoRechargeRate: 12000
-    autoRechargePause: true
   - type: SpaceArtillery
     powerChargeRate: 700
     powerUsePassive: 1500

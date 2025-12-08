@@ -13,14 +13,13 @@
   - type: Sprite
     sprite: /Textures/_Goobstation/Objects/Weapons/Guns/Ammunition/Magazine/energy_speedloader.rsi
     state: icon-lethal
-  - type: Battery
+  - type: PredictedBattery
     maxCharge: 600
     startingCharge: 600
   - type: BatteryDrinkerSource
     maxAmount: 100
   - type: PredictedBatterySelfRecharger
     autoRechargeRate: 40
-    autoRechargePause: true
     autoRechargePauseTime: 12
   - type: AmmoCounter
   - type: Appearance
