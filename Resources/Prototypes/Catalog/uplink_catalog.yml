@@ -195,6 +195,18 @@
 
 
 - type: listing
+  id: UplinkHushpup
+  name: uplink-hushpup-name
+  description: uplink-hushpup-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Shotguns/hushpup.rsi, state: icon }
+  productEntity: ClothingBackpackDuffelSyndicateFilledHushpup
+  discountCategory: rareDiscounts
+  cost:
+    Telecrystal: 50 # Trauma - was 10, 5x
+  categories:
+  - UplinkWeaponry
+
+- type: listing
   id: UplinkC20R #goob
   name: uplink-c20r-name #goob
   description: uplink-c20r-desc #goob
