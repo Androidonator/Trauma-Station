@@ -7,6 +7,7 @@
     - id: DerelictCyborgSyndicateSpawn
     - id: MalignRiftSpawn
     - id: FloorGoblinMidRound
+    - id: ClownGoblinMigration
 
 - type: entityTable
   id: ModerateAntagEventsTrauma
@@ -18,6 +19,14 @@
     - id: BingleSpawn
     - id: SlaughterDemonMidround
     - id: XenomorphsInfestation
+    # TOOD: see if good or slop
+    #- id: GreyTideAntagMidround
+    #- id: SingulothKnightsMidround
+    #- id: DarkLordMidround
+    #- id: MimeAssassinMidround
+    #- id: DarkPriestMidround
+    #- id: VoxRaidersMidround
+    #- id: TunnelClownMidround
     #- id: WraithMidround # if someone makes it less chuddy
     - id: ChangelingMidround
     - id: HereticMidround
