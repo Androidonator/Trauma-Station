@@ -1238,3 +1238,11 @@ Entries:
         softcrit.
   id: 146
   time: '2026-01-12T07:21:22.0000000+00:00'
+- author: deltanedas
+  changes:
+    - type: Fix
+      message: >-
+        Fixed reinforcement callers and NTRs briefcase having wrong cooldowns on
+        items.
+  id: 147
+  time: '2026-01-12T09:26:18.0000000+00:00'
