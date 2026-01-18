@@ -50,6 +50,7 @@
         - Tourniquet #Goobstation
         - MedicalPatch # Goobstation
         - HandheldCrewMonitor # Goobstation
+        - SyringeCase # Goobstation
       components:
         - Injector
         - Pill
