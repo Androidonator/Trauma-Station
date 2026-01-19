@@ -1502,21 +1502,9 @@
   description: uplink-black-jetpack-desc
   productEntity: JetpackBlackFilled
   cost:
-    Telecrystal: 10 # goob
+    Telecrystal: 5 # Trauma - was 1, 5x
   categories:
   - UplinkWearables
-
-
-- type: listing
-  id: UplinkHolster
-  name: uplink-holster-name
-  description: uplink-holster-desc
-  productEntity: ClothingBeltSyndieHolster
-  cost:
-    Telecrystal: 8 # goob - holster rework
-  categories:
-  - UplinkWearables
-
 
 - type: listing
   id: UplinkChestRig
@@ -1528,12 +1516,11 @@
   categories:
   - UplinkWearables
 
-
 - type: listing
   id: UplinkChameleon
   name: uplink-chameleon-name
   description: uplink-chameleon-desc
-  productEntity: ClothingBackpackChameleonFill
+  productEntity: ClothingBackpackChameleonFillAgent
   icon: { sprite: /Textures/Clothing/Uniforms/Jumpsuit/rainbow.rsi, state: icon }
   cost:
     Telecrystal: 15 # goob
@@ -1569,7 +1556,7 @@
   description: uplink-clothing-outer-vest-web-desc
   productEntity: ClothingOuterVestWeb
   cost:
-    Telecrystal: 15 # goob
+    Telecrystal: 25 # Trauma - was 5, 5x
   categories:
   - UplinkWearables
 
@@ -1590,7 +1577,7 @@
   description: uplink-clothing-shoes-boots-mag-syndie-desc
   productEntity: ClothingShoesBootsMagSyndie
   cost:
-    Telecrystal: 20 # goob
+    Telecrystal: 10 # Trauma - was 2, 5x
   categories:
   - UplinkWearables
 
@@ -1602,7 +1589,7 @@
   icon: { sprite: /Textures/Clothing/OuterClothing/Suits/eva_syndicate.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateEVABundle
   cost:
-    Telecrystal: 20 # goob - Meh protection no slowdown. Can definitely take a hit or two extra however.
+    Telecrystal: 5 # Trauma - was 1, 5x
   categories:
   - UplinkWearables
 
@@ -1614,7 +1601,7 @@
   icon: { sprite: /Textures/Clothing/OuterClothing/Suits/carpsuit.rsi, state: icon }
   productEntity: ClothingOuterHardsuitCarp
   cost:
-    Telecrystal: 20 # goob
+    Telecrystal: 15 # Trauma - was 3, 5x
   categories:
   - UplinkWearables
 
@@ -1626,7 +1613,7 @@
   icon: { sprite: /Textures/Clothing/OuterClothing/Hardsuits/syndicate.rsi, state: icon }
   productEntity: ClothingBackpackDuffelSyndicateHardsuitBundle
   cost:
-    Telecrystal: 50 # goob
+    Telecrystal: 50 # Trauma - was 7, 5x and more expensive because stun res etc
   categories:
   - UplinkWearables
 
@@ -1704,10 +1691,9 @@
 #  description: uplink-clothing-conducting-gloves-desc
 #  productEntity: ClothingHandsGlovesConducting
 #  cost:
-#    Telecrystal: 10 # goob
+#    Telecrystal: 1
 #  categories:
 #  - UplinkWearables
-
 
 - type: listing
   id: UplinkBackpackSyndicate

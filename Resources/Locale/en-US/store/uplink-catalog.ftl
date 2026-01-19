@@ -325,7 +325,7 @@ uplink-cane-blade-name = Cane Blade
 uplink-cane-blade-desc = A cane that has a hidden, strange blade that can be unsheathed. Stolen from a curator's personal museum. Lights people on fire via an ancient enchantment.
 # Armor
 uplink-chameleon-name = Chameleon Kit
-uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anything on the station, and more!
+uplink-chameleon-desc = A backpack full of items that contain chameleon technology allowing you to disguise as pretty much anyone on the station, and more! Comes with a free Agent ID card!
 
 uplink-clothing-no-slips-shoes-name = No-slip Shoes
 uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slips.
