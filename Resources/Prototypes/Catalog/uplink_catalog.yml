@@ -61,46 +61,6 @@
   categories:
   - UplinkWeaponry
 
-#- type: listing
-#  id: UplinkHyperEutacticBlade
-#  name: uplink-hypereutactic-blade-name
-#  description: uplink-hypereutactic-blade-desc
-#  icon: { sprite: /Textures/Objects/Weapons/Melee/hypereutactic_blade.rsi, state: icon }
-#  productEntity: HyperEutacticBlade
-#  cost:
-#    Telecrystal: 74 # goob - desword is 74 and this should be the same
-#  categories:
-#  - UplinkWeaponry
-#  conditions:
-#  - !type:BuyerWhitelistCondition
-#    blacklist:
-#      components:
-#      - SurplusBundle
-#  - !type:StoreWhitelistCondition
-#    blacklist:
-#      tags:
-#      - NukeOpsUplink
-
-#- type: listing
-#  id: UplinkHyperEutaticBlade
-#  name: uplink-hypereutatic-blade-name
-#  description: uplink-hypereutatic-blade-desc
-#  icon: { sprite: /Textures/Objects/Weapons/Melee/hypereutactic_blade.rsi, state: icon }
-#  productEntity: HyperEutaticBlade
-#  cost:
-#    Telecrystal: 74 # goob - same as double energy sword
-#  categories:
-#  - UplinkWeaponry
-#  conditions:
-#  - !type:BuyerWhitelistCondition
-#    blacklist:
-#      components:
-#      - SurplusBundle
-#  - !type:StoreWhitelistCondition
-#    whitelist:
-#      tags:
-#      - NukeOpsUplink
-
 - type: listing
   id: UplinkEnergyDagger
   name: uplink-edagger-name
@@ -111,7 +71,6 @@
     Telecrystal: 10 # goob
   categories:
   - UplinkWeaponry
-
 
 - type: listing
   id: UplinkEnergyCrossbow
@@ -275,26 +234,14 @@
   description: uplink-explosive-grenade-desc
   productEntity: ExGrenade
   cost:
-    Telecrystal: 10 # goob
+    Telecrystal: 10 # Trauma - was 1, 5x and doubled because its pretty strong
   categories:
   - UplinkExplosives
-  conditions: # Goob, two times cheaper for nukies
+  conditions:
   - !type:StoreWhitelistCondition
-    blacklist:
+    blacklist: # Trauma - inverted, theres a nukie listing separately
       tags:
       - NukeOpsUplink
-
-
-- type: listing
-  id: UplinkExplosiveGrenadeFlash
-  name: uplink-flash-grenade-name
-  description: uplink-flash-grenade-desc
-  productEntity: GrenadeFlashBang
-  cost:
-    Telecrystal: 1 # goob
-  categories:
-  - UplinkExplosives
-
 
 - type: listing
   id: UplinkSmokeGrenade
@@ -302,7 +249,7 @@
   description: uplink-smoke-grenade-desc
   productEntity: SmokeGrenade
   cost:
-    Telecrystal: 4 # goob
+    Telecrystal: 4 # Trauma - was 1, 5x but even cheaper because its a smoke grenade
   categories:
   - UplinkExplosives
   conditions: # Goob, two times cheaper for nukies
@@ -310,7 +257,6 @@
     blacklist:
       tags:
       - NukeOpsUplink
-
 
 - type: listing
   id: UplinkSyndieMiniBomb
@@ -366,7 +312,7 @@
   description: uplink-penguin-grenade-desc
   productEntity: MobGrenadePenguin
   cost:
-    Telecrystal: 18 # goob
+    Telecrystal: 18 # Trauma - was 4, 5x and a tiny bit cheaper
   categories:
     - UplinkExplosives
   conditions:
@@ -407,7 +353,6 @@
 #      tags:
 #      - NukeOpsUplink
 
-
 - type: listing
   id: UplinkC4Bundle
   name: uplink-c4-bundle-name
@@ -422,7 +367,6 @@
     blacklist:
       tags:
       - NukeOpsUplink
-
 
 - type: listing
   id: UplinkEmpGrenade
@@ -439,7 +383,6 @@
       tags:
       - NukeOpsUplink
 
-
 - type: listing
   id: UplinkExplodingPen
   name: uplink-exploding-pen-name
@@ -450,7 +393,6 @@
     Telecrystal: 12 # goob
   categories:
   - UplinkExplosives
-
 
 - type: listing
   id: UplinkSyndicateBomb
@@ -484,22 +426,6 @@
       - NukeOpsUplink
 
 - type: listing
-  id: UplinkClusterGrenade
-  name: uplink-cluster-grenade-name
-  description: uplink-cluster-grenade-desc
-  productEntity: ClusterGrenade
-  cost:
-    Telecrystal: 22 # goob - Best grenade in the game currently, but very hard to predict how it explodes.
-  categories:
-  - UplinkExplosives
-  conditions: # Goob, two times cheaper for nukies
-  - !type:StoreWhitelistCondition
-    blacklist:
-      tags:
-      - NukeOpsUplink
-
-
-- type: listing
   id: UplinkGrenadeShrapnel
   name: uplink-shrapnel-grenade-name
   description: uplink-shrapnel-grenade-desc
@@ -513,7 +439,6 @@
     blacklist:
       tags:
       - NukeOpsUplink
-
 
 - type: listing
   id: UplinkGrenadeIncendiary
@@ -529,18 +454,6 @@
     blacklist:
       tags:
       - NukeOpsUplink
-
-
-#- type: listing # Bundles are boring, nades themselves are cheap instead
-#  id: UplinkEmpKit
-#  name: uplink-emp-kit-name
-#  description: uplink-emp-kit-desc
-#  productEntity: ElectricalDisruptionKit
-#  cost:
-#    Telecrystal: 20 # goob
-#  categories:
-#    - UplinkExplosives
-
 
 # Ammo
 
