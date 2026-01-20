@@ -1090,3 +1090,6 @@ RightHandSkeleton: OrganSkeletonPersonHandRight
 RightLegHuman: OrganHumanLegRight
 TorsoSkeleton: OrganSkeletonPersonTorso
 RightArmSkeleton: OrganSkeletonPersonArmRight
+
+# 2026-01-19
+#TowelColorOrange: null # Trauma - kept towels

@@ -41,7 +41,7 @@
   - ClothingNeckGenderfluidPin
   - ClothingNeckTransPin
   - ClothingNeckAutismPin
-  #- ClothingNeckGoldAutismPin # Trauma - not cherry picked??
+  - ClothingNeckGoldAutismPin
   # <Goob>
   - CardBoxBlack
   - CardBoxNanotrasen
@@ -56,6 +56,8 @@
   - OffsetCaneNT
   - Cane
   - TowelColorWhite
+  # <Trauma>
+  # upstream gutted towels lol
   - TowelColorGray
   - TowelColorBlack
   - TowelColorRed
@@ -71,13 +73,12 @@
   - TowelColorMime
   - TowelColorSilver
   - TowelColorGold
-  # Begin DeltaV Additions
   - GoldRing
   - SilverRing
   - Cane
   - WhiteCane
   - TapeRecorder
-  # End DeltaV Additions
+  # </Trauma>
 
 - type: loadoutGroup
   id: Glasses
