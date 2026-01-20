@@ -1617,3 +1617,9 @@ Entries:
       message: Added Security gloves! in secDrobe and security lockers.
   id: 195
   time: '2026-01-20T18:11:00.0000000+00:00'
+- author: JohnJJohn
+  changes:
+    - type: Fix
+      message: Fixed cauterized wound popup appearing for everyone
+  id: 196
+  time: '2026-01-20T19:03:11.0000000+00:00'
