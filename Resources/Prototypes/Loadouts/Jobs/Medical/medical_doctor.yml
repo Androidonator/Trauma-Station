@@ -34,7 +34,7 @@
   id: SeniorPhysicianBeret
   effects:
   - !type:GroupLoadoutEffect
-    proto: MedicalExpertTimer
+    proto: SeniorPhysician
   equipment:
     head: ClothingHeadHatBeretSeniorPhysician
 
@@ -93,7 +93,7 @@
   id: SeniorPhysicianJumpsuit
   effects:
   - !type:GroupLoadoutEffect
-    proto: MedicalExpertTimer
+    proto: SeniorPhysician
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorPhysician
 
@@ -101,7 +101,7 @@
   id: SeniorPhysicianJumpskirt
   effects:
   - !type:GroupLoadoutEffect
-    proto: MedicalExpertTimer
+    proto: SeniorPhysician
   equipment:
     jumpsuit: ClothingUniformJumpskirtSeniorPhysician
 
@@ -155,7 +155,7 @@
   id: SeniorPhysicianLabCoat
   effects:
   - !type:GroupLoadoutEffect
-    proto: MedicalExpertTimer
+    proto: SeniorPhysician
   equipment:
     outerClothing: ClothingOuterCoatLabSeniorPhysician
 
@@ -175,7 +175,7 @@
   id: SeniorPhysicianPDA
   effects:
   - !type:GroupLoadoutEffect
-    proto: MedicalExpertTimer
+    proto: SeniorPhysician
   equipment:
     id: SeniorPhysicianPDA
 
