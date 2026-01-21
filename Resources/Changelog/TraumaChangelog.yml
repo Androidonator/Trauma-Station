@@ -1711,3 +1711,9 @@ Entries:
       message: Fixed ashen passage round removing you.
   id: 208
   time: '2026-01-21T20:22:33.0000000+00:00'
+- author: Armok
+  changes:
+    - type: Add
+      message: RD gets a custom law board in thier locker
+  id: 209
+  time: '2026-01-21T22:56:12.0000000+00:00'
