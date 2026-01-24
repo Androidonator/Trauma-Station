@@ -1828,3 +1828,12 @@ Entries:
   id: 224
   time: '2026-01-24T19:30:33.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/478
+- author: deltanedas
+  changes:
+  - type: Tweak
+    message: >-
+      Most mobs now have sounds for gulp/surprised emotes instead of squeaking
+      or whatever.
+  id: 225
+  time: '2026-01-24T19:39:01.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/481
