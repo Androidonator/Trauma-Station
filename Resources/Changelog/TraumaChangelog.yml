@@ -1910,3 +1910,13 @@ Entries:
   id: 234
   time: '2026-01-25T11:34:39.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/500
+- author: deltanedas
+  changes:
+  - type: Add
+    message: >-
+      Added the FOXDIE retrovirus, traitor virologists can buy it and sample a
+      target's DNA. It will only kill targets with sampled DNA, being
+      transmitted harmlessly by everyone else.
+  id: 235
+  time: '2026-01-25T15:36:21.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/501
