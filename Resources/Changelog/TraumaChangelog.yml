@@ -1887,3 +1887,12 @@ Entries:
   id: 231
   time: '2026-01-25T10:41:24.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/496
+- author: deltanedas
+  changes:
+  - type: Tweak
+    message: >-
+      All crew get hypoports by default. The No Hypoport trait is now an
+      opt-out.
+  id: 232
+  time: '2026-01-25T10:59:13.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/497
