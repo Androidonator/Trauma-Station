@@ -1862,3 +1862,12 @@ Entries:
   id: 228
   time: '2026-01-24T23:44:08.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/484
+- author: deltanedas
+  changes:
+  - type: Fix
+    message: >-
+      Fixed bullets always targeting a random part, now they will go where you
+      aim if you are very close.
+  id: 229
+  time: '2026-01-24T23:59:26.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/482
