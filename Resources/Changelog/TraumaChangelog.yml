@@ -1986,3 +1986,12 @@ Entries:
   id: 243
   time: '2026-01-26T12:25:22.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/530
+- author: deltanedas
+  changes:
+  - type: Fix
+    message: >-
+      Fixed AP weapons ignoring damage increases like species downsides or
+      executions.
+  id: 244
+  time: '2026-01-26T13:11:35.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/531
