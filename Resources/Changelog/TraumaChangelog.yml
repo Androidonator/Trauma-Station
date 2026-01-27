@@ -2036,3 +2036,14 @@ Entries:
   id: 249
   time: '2026-01-27T12:23:10.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/545
+- author: deltanedas
+  changes:
+  - type: Add
+    message: Added a Use In Hand mode to the interactor.
+  - type: Add
+    message: >-
+      Added verbs for the interactor to toggle settings without needing to link
+      anything.
+  id: 250
+  time: '2026-01-27T13:26:16.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/546
