@@ -13,5 +13,5 @@
   id: MeteorChangeling # Those Who Know
   components:
     - type: ChangelingIdentity
-    - type: VoidAdaption
+    #- type: VoidAdaption
     ## todo: component that has all of the changeling arms (this will start with an armblade)

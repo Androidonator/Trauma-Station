@@ -70,11 +70,6 @@
     - type: ComponentToggler
       components:
       - type: Insulated
-      - type: GrabModifier
-        grabEscapeModifier: -0.1
-        grabEscapeMultiplier: 0.8
-        grabMoveSpeedMultiplier: 2
-        startingGrabStage: Hard
 
 - type: entity
   parent: [ClothingModsuitHelmetStandard, ShowSecurityIcons, BaseSyndicateContraband]

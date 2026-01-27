@@ -23,6 +23,7 @@
 
 using Content.Lavaland.Common.Weapons.Ranged;
 using Content.Lavaland.Shared.Pressure;
+using Content.Lavaland.Shared.Weapons.Upgrades;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Armor;
 using Content.Shared.Body.Systems;
@@ -50,8 +51,8 @@ public sealed class PressureEfficiencyChangeSystem : SharedPressureEfficiencyCha
         _projectileQuery = GetEntityQuery<ProjectileComponent>();
 
         SubscribeLocalEvent<PressureDamageChangeComponent, GetMeleeDamageEvent>(OnGetDamage);
-        SubscribeLocalEvent<PressureDamageChangeComponent, GunShotEvent>(OnGunShot);
-        SubscribeLocalEvent<PressureDamageChangeComponent, ProjectileShotEvent>(OnProjectileShot);
+        SubscribeLocalEvent<PressureDamageChangeComponent, ProjectileShotEvent>(OnProjectileShot,
+            after: [ typeof(GunUpgradeSystem) ]); // let this system reduce damage upgrades' added damage automatically
 
         SubscribeLocalEvent<PressureArmorChangeComponent, InventoryRelayedEvent<DamageModifyEvent>>(OnArmorRelayDamageModify, before: [typeof(SharedArmorSystem)]);
     }
@@ -98,12 +99,6 @@ public sealed class PressureEfficiencyChangeSystem : SharedPressureEfficiencyCha
     /// </summary>
     public float GetModifier(Entity<PressureDamageChangeComponent?> ent)
         => _query.Resolve(ent, ref ent.Comp) ? ent.Comp.AppliedModifier : 1f;
-
-    public void SetModifierEnabled(Entity<PressureDamageChangeComponent?> ent, bool enabled)
-    {
-        if (_query.Resolve(ent, ref ent.Comp, false))
-            ent.Comp.Enabled = enabled;
-    }
 
     private void OnArmorRelayDamageModify(Entity<PressureArmorChangeComponent> ent, ref InventoryRelayedEvent<DamageModifyEvent> args)
     {
