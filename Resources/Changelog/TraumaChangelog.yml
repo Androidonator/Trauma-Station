@@ -2061,3 +2061,14 @@ Entries:
   id: 252
   time: '2026-01-27T20:12:57.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/549
+- author: JohnJJohn
+  changes:
+  - type: Remove
+    message: >-
+      Removed sci from the cuck chair (they can now build all the MechBoards in
+      the exosuit fab)
+  - type: Tweak
+    message: The normal mech drill is now in the basic mech equipment research
+  id: 253
+  time: '2026-01-28T14:22:28.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/552
