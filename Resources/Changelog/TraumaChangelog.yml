@@ -2294,3 +2294,10 @@ Entries:
   id: 280
   time: '2026-02-02T14:44:37.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/626
+- author: NoElkaTheGod
+  changes:
+  - type: Tweak
+    message: You can now chose other species' language in character editor
+  id: 281
+  time: '2026-02-02T16:00:56.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/625
