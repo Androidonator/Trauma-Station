@@ -2253,3 +2253,10 @@ Entries:
   id: 275
   time: '2026-02-01T21:59:25.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/607
+- author: Aviu
+  changes:
+  - type: Add
+    message: 'New mime exclusive traitor item: guide to advanced mimery.'
+  id: 276
+  time: '2026-02-02T07:07:12.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/473
