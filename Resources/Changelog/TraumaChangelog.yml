@@ -2326,3 +2326,12 @@ Entries:
   id: 284
   time: '2026-02-04T21:02:14.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/637
+- author: Aviu
+  changes:
+  - type: Fix
+    message: Fixed wizard teleport spell not working.
+  - type: Fix
+    message: Fixed smartgun homing not working.
+  id: 285
+  time: '2026-02-05T12:40:55.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/641
