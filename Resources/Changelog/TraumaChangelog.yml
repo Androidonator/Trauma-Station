@@ -2335,3 +2335,12 @@ Entries:
   id: 285
   time: '2026-02-05T12:40:55.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/641
+- author: SpeltIncorrectyl
+  changes:
+  - type: Add
+    message: >-
+      Ported energy chem: synthesize precursor chemicals directly from
+      electricity instead of mixing jugs like a caveman.
+  id: 286
+  time: '2026-02-07T06:58:19.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/645
