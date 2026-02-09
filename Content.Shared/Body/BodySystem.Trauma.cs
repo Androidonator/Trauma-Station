@@ -124,10 +124,10 @@ public sealed partial class BodySystem
     /// <summary>
     /// Get a list of vital bodyparts, which contribute to vital damage.
     /// </summary>
-    public List<Entity<OrganComponent>> GetVitalParts(EntityUid body)
+    public List<EntityUid> GetVitalParts(EntityUid body)
     {
         // doing this to use cache instead of looping every organ and checking them
-        var vital = new List<Entity<OrganComponent>>(VitalParts.Length);
+        var vital = new List<EntityUid>(VitalParts.Length);
         foreach (var category in VitalParts)
         {
             if (_cache.GetOrgan(body, category) is {} organ)
@@ -325,7 +325,7 @@ public sealed partial class BodySystem
         [ForbidLiteral] ProtoId<MarkingPrototype> marking,
         bool force = false)
     {
-        if (Resolve(organ, ref organ.Comp))
+        if (!Resolve(organ, ref organ.Comp))
             return false; // organ doesn't support markings
 
         var markingData = organ.Comp.MarkingData;

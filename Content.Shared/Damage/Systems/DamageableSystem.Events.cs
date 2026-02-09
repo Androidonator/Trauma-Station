@@ -17,13 +17,15 @@ public sealed partial class DamageableSystem
 {
     public override void Initialize()
     {
+        InitializeTrauma(); // Trauma
         SubscribeLocalEvent<DamageableComponent, ComponentInit>(DamageableInit);
         SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
         SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
         SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
         SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
 
-        InitializeTrauma(); // Trauma
+        _appearanceQuery = GetEntityQuery<AppearanceComponent>();
+        _damageableQuery = GetEntityQuery<DamageableComponent>();
 
         // Damage modifier CVars are updated and stored here to be queried in other systems.
         // Note that certain modifiers requires reloading the guidebook.
