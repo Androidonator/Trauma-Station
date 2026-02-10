@@ -67,7 +67,7 @@
       LegRight: OrganSlimePersonLegRight
       FootLeft: OrganSlimePersonFootLeft
       FootRight: OrganSlimePersonFootRight
-      Brain: OrganSlimePersonCore
+      Stomach: OrganSlimePersonCore # Shitmed - Brain -> Stomach
       Lungs: OrganSlimePersonLungs
   - type: HumanoidProfile
     species: SlimePerson
@@ -98,6 +98,8 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      enum.StoreUiKey.Key: # Goob - changelings
+        type: StoreBoundUserInterface
   - type: UseDelay
     delay: 0.5
   - type: Speech
@@ -183,6 +185,12 @@
   components:
   - type: Damageable
     damageModifierSet: Slime
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Slime
+          Quantity: 15
   # </Shitmed>
 
 - type: entity
@@ -259,10 +267,22 @@
   id: OrganSlimePersonCore
   name: sentient slime core
   components:
+  # <Shitmed>
+  - type: Organ
+    category: Stomach # lets it be stored in the torso
+  - type: ChildOrgan
+    parentCategory: Torso # allow it to be in torsos instead of head
+  # </Shitmed>
   - type: SolutionContainerManager
     solutions:
       stomach:
         maxVol: 50.0
+      # <Shitmed>
+      food:
+        reagents:
+        - ReagentId: Slime
+          Quantity: 15
+      # </Shitmed>
   - type: Stomach
   - type: Metabolizer
     maxReagents: 6
@@ -274,5 +294,16 @@
   id: OrganSlimePersonLungs
   name: gas sacs
   components:
+  # <Shitmed>
+  - type: SolutionContainerManager
+    solutions:
+      Lung:
+        maxVol: 100.0
+        canReact: false
+      food:
+        reagents:
+        - ReagentId: Slime
+          Quantity: 15
+  # </Shitmed>
   - type: Lung
     alert: LowNitrogen

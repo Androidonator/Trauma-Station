@@ -15,7 +15,13 @@ public sealed class BodyStatusSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<BodyStatusComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<BodyStatusComponent, MobStateChangedEvent>(OnMobStateChange);
+    }
+
+    private void OnMapInit(Entity<BodyStatusComponent> ent, ref MapInitEvent args)
+    {
+        UpdateStatus(ent.AsNullable());
     }
 
     private void OnMobStateChange(Entity<BodyStatusComponent> ent, ref MobStateChangedEvent args)

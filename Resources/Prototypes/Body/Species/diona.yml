@@ -322,6 +322,10 @@
     containers:
       body_organs: !type:AllSelector
         children:
+        # <Shitmed> - evil nymph surgery
+        - id: OrganDionaHead
+        - id: OrganDionaTorso
+        # </Shitmed>
         - id: OrganDionaBrain
         - id: OrganAnimalLungs
         - id: OrganAnimalStomach
@@ -339,6 +343,9 @@
     containers:
       body_organs: !type:AllSelector
         children:
+        # <Shitmed> - evil nymph surgery
+        - id: OrganDionaTorso
+        # </Shitmed>
         - id: OrganDionaLungs
         - id: OrganAnimalStomach
         - id: OrganAnimalLiver
@@ -355,6 +362,9 @@
     containers:
       body_organs: !type:AllSelector
         children:
+        # <Shitmed> - evil nymph surgery
+        - id: OrganDionaTorso
+        # </Shitmed>
         - id: OrganAnimalLungs
         - id: OrganDionaStomach
         - id: OrganAnimalLiver

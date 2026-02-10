@@ -3,6 +3,8 @@ using Content.Medical.Common.Body;
 using Content.Shared.Body;
 using Content.Shared.Gibbing;
 using Robust.Shared.Containers;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Medical.Shared.Body;
 
@@ -12,6 +14,7 @@ namespace Content.Medical.Shared.Body;
 public sealed partial class BodyPartSystem : CommonBodyPartSystem
 {
     [Dependency] private readonly BodySystem _body = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
 
     private EntityQuery<BodyPartComponent> _query;
@@ -33,6 +36,9 @@ public sealed partial class BodyPartSystem : CommonBodyPartSystem
 
     private void OnPartInserted(Entity<BodyPartComponent> ent, ref OrganGotInsertedEvent args)
     {
+        if (_timing.ApplyingState)
+            return;
+
         // fresh part, no organs inside
         if (GetSeveredOrgansContainer(ent.AsNullable()) is not {} container)
             return;
@@ -54,7 +60,7 @@ public sealed partial class BodyPartSystem : CommonBodyPartSystem
     {
         // don't transfer parts if the body is being deleted
         // note that this will still transfer if the part is being deleted, so its organs will go away too
-        if (TerminatingOrDeleted(ent))
+        if (TerminatingOrDeleted(ent) || _timing.ApplyingState)
             return;
 
         var container = EnsureSeveredOrgansContainer(ent);
@@ -68,6 +74,7 @@ public sealed partial class BodyPartSystem : CommonBodyPartSystem
             // slot has an organ so try to put it in the container
             if (!_container.Insert(organ, container))
             {
+                // probably from failing to be removed, suspicious
                 Log.Error($"Failed to store {ToPrettyString(ent)}'s {category} organ {ToPrettyString(organ)}!");
                 continue;
             }
@@ -88,22 +95,30 @@ public sealed partial class BodyPartSystem : CommonBodyPartSystem
 
     internal void OrganInserted(Entity<BodyPartComponent?> part, Entity<OrganComponent?> organ)
     {
+        DebugTools.Assert(part.Owner != organ.Owner);
         if (!_query.Resolve(part, ref part.Comp) ||
             _body.GetCategory(organ) is not {} category ||
             !CanInsertOrgan(part, category)) // just incase
             return;
 
-        part.Comp.Children[category] = part;
+        part.Comp.Children[category] = organ;
         DirtyField(part, part.Comp, nameof(BodyPartComponent.Children));
+
+        var ev = new OrganInsertedIntoPartEvent(organ, category);
+        RaiseLocalEvent(part, ref ev);
     }
 
     internal void OrganRemoved(Entity<BodyPartComponent?> part, Entity<OrganComponent?> organ)
     {
+        DebugTools.Assert(part.Owner != organ.Owner);
         if (!_query.Resolve(part, ref part.Comp) ||
             _body.GetCategory(organ) is not {} category)
             return;
 
         part.Comp.Children.Remove(category);
         DirtyField(part, part.Comp, nameof(BodyPartComponent.Children));
+
+        var ev = new OrganRemovedFromPartEvent(organ, category);
+        RaiseLocalEvent(part, ref ev);
     }
 }

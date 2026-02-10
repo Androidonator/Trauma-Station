@@ -28,7 +28,14 @@
     damageGroupSprites:
       Brute: _Shitmed/Mobs/Effects/brute_damage.rsi
       Burn: _Shitmed/Mobs/Effects/burn_damage.rsi
+    damageGroupColors:
+      Brute: "#FF0000"
+  - type: Appearance
   - type: Nerve
+  - type: ContainerContainer
+    containers:
+      Wounds: !type:Container
+      Bone: !type:Container
 
 - type: entity
   abstract: true
@@ -37,7 +44,6 @@
   components:
   - type: InternalOrgan
   - type: ChildOrgan # there are no internal organs that are roots
-  # TODO: other shit im sure i forgot something
 
 - type: entity
   abstract: true
@@ -100,6 +106,8 @@
   components:
   - type: ChildOrgan
     parentCategory: Torso
+  - type: WoundableVisuals
+    bleedingOverlay: _Shitmed/Mobs/Effects/bleeding_damage.rsi
   - type: Limb
 
 - type: entity

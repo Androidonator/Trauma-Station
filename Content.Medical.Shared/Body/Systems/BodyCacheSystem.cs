@@ -3,7 +3,6 @@ using Content.Medical.Common.Body;
 using Content.Shared.Body;
 using Content.Shared.Containers;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Medical.Shared.Body;
 
@@ -32,7 +31,7 @@ public sealed class BodyCacheSystem : CommonBodyCacheSystem
         SubscribeLocalEvent<BodyCacheComponent, OrganInsertedIntoEvent>(OnBodyInsertedInto);
         SubscribeLocalEvent<BodyCacheComponent, OrganRemovedFromEvent>(OnBodyRemovedFrom);
         SubscribeLocalEvent<BodyCacheComponent, MapInitEvent>(OnMapInit,
-            after: [ typeof(ContainerFillSystem) ]); // only run after all organs have been added so it's complete
+            after: [ typeof(ContainerFillSystem), typeof(InitialBodySystem) ]); // only run after all organs have been added so it's complete
 
         SubscribeLocalEvent<ChildOrganComponent, OrganInsertAttemptEvent>(OnChildInsertAttempt);
         SubscribeLocalEvent<ChildOrganComponent, OrganGotInsertedEvent>(OnChildInserted);
@@ -51,7 +50,8 @@ public sealed class BodyCacheSystem : CommonBodyCacheSystem
 
     private void OnBodyRemove(Entity<BodyComponent> ent, ref ComponentRemove args)
     {
-        RemComp<BodyCacheComponent>(ent);
+        if (_query.TryComp(ent, out var cache)) // prevent deleting already deleted comp
+            RemCompDeferred(ent, cache);
     }
 
     private void OnBodyInsertedInto(Entity<BodyCacheComponent> ent, ref OrganInsertedIntoEvent args)

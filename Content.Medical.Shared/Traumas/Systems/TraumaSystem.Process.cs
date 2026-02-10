@@ -509,8 +509,9 @@ public partial class TraumaSystem
         if (_body.GetBody(target.Owner) is not {} body ||
             _part.GetPartType(target.Owner) is not {} partType ||
             // can't dismember the root part
+            !target.Comp.CanRemove ||
             target.Comp.ParentWoundable is not {} parent ||
-            Comp<WoundableComponent>(parent).WoundableSeverity != WoundableSeverity.Mangled)
+            target.Comp.WoundableSeverity != WoundableSeverity.Mangled) // has to be mangled before possibly dismembering
             return false;
 
         var deduction = GetTraumaChanceDeduction(
@@ -674,7 +675,12 @@ public partial class TraumaSystem
                     break;
 
                 case TraumaType.OrganDamage:
-                    var organs = _part.GetPartOrgans((target.Owner, part)).Values.ToList();
+                    var organs = new List<EntityUid>();
+                    foreach (var organ in _part.GetPartOrgans((target.Owner, part)).Values)
+                    {
+                        if (HasComp<InternalOrganComponent>(organ))
+                            organs.Add(organ);
+                    }
                     // TODO SHITMED: predicted random
                     _random.Shuffle(organs);
 

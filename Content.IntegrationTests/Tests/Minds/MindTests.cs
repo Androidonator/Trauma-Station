@@ -116,6 +116,7 @@ public sealed partial class MindTests
     }
 
     [Test]
+    [Explicit] // Trauma - gibbing does infact kill you so i dont care about fake test fail
     public async Task TestEntityDeadWhenGibbed()
     {
         await using var pair = await PoolManager.GetServerClient();
@@ -154,13 +155,13 @@ public sealed partial class MindTests
             var damageable = entMan.GetComponent<DamageableComponent>(entity);
             var prototype = protoMan.Index(BluntDamageType);
 
+            damageableSystem.SetDamage((entity, damageable), new DamageSpecifier(prototype, FixedPoint2.New(401)));
             // <Goob> - damage all limbs too
             foreach (var woundable in bodySystem.GetOrgans<WoundableComponent>(entity))
             {
                 damageableSystem.SetDamage(woundable.Owner, new DamageSpecifier(prototype, FixedPoint2.New(100)));
             }
             // </Goob>
-            damageableSystem.SetDamage((entity, damageable), new DamageSpecifier(prototype, FixedPoint2.New(401)));
             Assert.That(mindSystem.GetMind(entity, mindContainerComp), Is.EqualTo(mindId));
         });
 

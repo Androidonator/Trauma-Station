@@ -222,7 +222,7 @@ public abstract partial class SharedSurgerySystem : EntitySystem
 
     private void OnBodyComponentConditionValid(Entity<SurgeryBodyComponentConditionComponent> ent, ref SurgeryValidEvent args)
     {
-        args.Cancelled |= _whitelist.CheckBoth(args.Body, blacklist: ent.Comp.Blacklist, whitelist: ent.Comp.Whitelist);
+        args.Cancelled |= !_whitelist.CheckBoth(args.Body, blacklist: ent.Comp.Blacklist, whitelist: ent.Comp.Whitelist);
     }
 
     private void OnPartComponentConditionValid(Entity<SurgeryPartComponentConditionComponent> ent, ref SurgeryValidEvent args)

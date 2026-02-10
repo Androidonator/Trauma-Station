@@ -68,7 +68,7 @@ SPDX-License-Identifier: AGPL-3.0-or-later
             </BoxContainer>
             <Control MinHeight="10" />
             <!-- tabContainer -->
-            <TabContainer Name="TabContainer" VerticalExpand="True">
+            <TabContainer Name="TabContainer" VerticalExpand="True" Access="Public"> <!-- Trauma - public -->
                 <BoxContainer Orientation="Vertical">
                     <ScrollContainer VerticalExpand="True">
                         <!-- appearanceList -->

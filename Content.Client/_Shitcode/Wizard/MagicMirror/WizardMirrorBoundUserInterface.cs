@@ -38,6 +38,6 @@ public sealed class WizardMirrorBoundUserInterface(EntityUid owner, Enum uiKey) 
             return;
 
         //_window.Editor.LoadedProfile = data.Profile.Clone();
-        _window.Editor.SetProfile(data.Profile, null);
+        _window.Editor.SetProfile(data.Profile, 0);
     }
 }

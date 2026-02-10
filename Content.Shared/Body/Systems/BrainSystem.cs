@@ -2,6 +2,7 @@
 using Content.Goobstation.Common.Body;
 using Content.Medical.Common.Body;
 using Content.Shared.Body;
+using Robust.Shared.Timing;
 // </Trauma>
 using Content.Shared.Body.Components;
 using Content.Shared.Ghost;
@@ -16,6 +17,7 @@ public sealed class BrainSystem : EntitySystem
 {
     // <Trauma>
     [Dependency] private readonly BodySystem _body = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     // </Trauma>
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
 
@@ -61,7 +63,7 @@ public sealed class BrainSystem : EntitySystem
         if (!HasBrain(args.Target))
         {
             // Prevents revival, should kill the user within a given timespan too.
-            if (!TerminatingOrDeleted(args.Target))
+            if (!TerminatingOrDeleted(args.Target) && !_timing.ApplyingState)
                 EnsureComp<DebrainedComponent>(args.Target);
             HandleMind(uid, args.Target);
         }

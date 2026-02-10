@@ -6,6 +6,7 @@ using Content.Medical.Common.Targeting;
 using Content.Medical.Shared.Targeting;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
+using Robust.Client.UserInterface.Controls;
 using Robust.Client.Player;
 
 namespace Content.Medical.Client.UserInterface.Systems.Targeting;
@@ -17,13 +18,29 @@ public sealed class TargetingUIController : UIController, IOnStateEntered<Gamepl
     [Dependency] private readonly IPlayerManager _player = default!;
 
     private TargetingComponent? _targetingComponent;
-    private TargetingControl? TargetingControl => UIManager.GetActiveUIWidgetOrNull<TargetingControl>();
+    private TargetingControl? TargetingControl;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        DefaultGameScreen.OnCreateTargeting += CreateTargetingControl;
+        UIManager.OnScreenChanged += screens =>
+        {
+            if (screens.New is not {} screen)
+                return;
+
+            try
+            {
+                // separated hud has its own container for it
+                var container = screen.FindControl<LayoutContainer>("ViewportContainer");
+                CreateTargetingControl(container);
+            }
+            catch (ArgumentException)
+            {
+                // default hud, just add it directly
+                CreateTargetingControl(screen);
+            }
+        };
     }
 
     public void OnSystemLoaded(TargetingSystem system)
@@ -40,9 +57,15 @@ public sealed class TargetingUIController : UIController, IOnStateEntered<Gamepl
         system.TargetChange -= CycleTarget;
     }
 
-    private void CreateTargetingControl(Control parent)
+    private void CreateTargetingControl(LayoutContainer parent)
     {
-        parent.AddChild(new TargetingControl());
+        TargetingControl?.Orphan();
+        var control = new TargetingControl();
+        control.OnSetTarget += CycleTarget;
+        parent.AddChild(control);
+        TargetingControl = control;
+        LayoutContainer.SetAnchorAndMarginPreset(control, LayoutContainer.LayoutPreset.BottomRight, margin: 5);
+        UpdateVisibility();
     }
 
     public void OnStateEntered(GameplayState state)

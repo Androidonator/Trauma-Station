@@ -8,6 +8,10 @@
     solutions:
       stomach:
         maxVol: 1984
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 100 # yum
   - type: InternalOrgan
     intCap: 1984
     integrity: 1984

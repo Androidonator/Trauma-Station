@@ -50,12 +50,11 @@ public sealed partial class WoundSystem
     {
         SubscribeLocalEvent<WoundableComponent, ComponentInit>(OnWoundableInit);
         SubscribeLocalEvent<WoundableComponent, MapInitEvent>(OnWoundableMapInit);
-        SubscribeLocalEvent<WoundableComponent, EntInsertedIntoContainerMessage>(OnWoundableInserted);
-        SubscribeLocalEvent<WoundableComponent, EntRemovedFromContainerMessage>(OnWoundableRemoved);
+        SubscribeLocalEvent<WoundableComponent, OrganInsertedIntoPartEvent>(OnWoundableInserted);
+        SubscribeLocalEvent<WoundableComponent, OrganRemovedFromPartEvent>(OnWoundableRemoved);
         SubscribeLocalEvent<WoundComponent, EntGotInsertedIntoContainerMessage>(OnWoundInserted);
         SubscribeLocalEvent<WoundComponent, EntGotRemovedFromContainerMessage>(OnWoundRemoved);
         SubscribeLocalEvent<WoundComponent, WoundSeverityChangedEvent>(OnWoundSeverityChanged);
-        SubscribeLocalEvent<WoundComponent, WoundSeverityPointChangedEvent>(OnWoundSeverityPointChanged);
         SubscribeLocalEvent<WoundableComponent, BeforeDamageChangedEvent>(DudeItsJustLikeMatrix);
         SubscribeLocalEvent<WoundableComponent, WoundHealAttemptOnWoundableEvent>(HealWoundsOnWoundableAttempt);
         SubscribeLocalEvent<WoundableComponent, CheckPartBleedingEvent>(OnCheckPartBleeding);
@@ -86,13 +85,11 @@ public sealed partial class WoundSystem
             return;
 
         var bone = Spawn(comp.BoneEntity);
-        if (!TryComp<BoneComponent>(bone, out var boneComp))
-            return;
-
+        var boneComp = Comp<BoneComponent>(bone);
         _transform.SetParent(bone, uid);
         _container.Insert(bone, comp.Bone);
         boneComp.BoneWoundable = uid;
-        Dirty(uid, comp);
+        Dirty(bone, boneComp);
     }
 
     private void OnWoundInserted(EntityUid uid, WoundComponent comp, EntGotInsertedIntoContainerMessage args)
@@ -116,45 +113,44 @@ public sealed partial class WoundSystem
         }
     }
 
-    private void OnWoundRemoved(EntityUid woundableEntity, WoundComponent wound, EntGotRemovedFromContainerMessage args)
+    private void OnWoundRemoved(Entity<WoundComponent> wound, ref EntGotRemovedFromContainerMessage args)
     {
-        if (wound.HoldingWoundable == EntityUid.Invalid)
+        if (wound.Comp.HoldingWoundable == EntityUid.Invalid || _timing.ApplyingState)
             return;
 
-        if (!TryComp(wound.HoldingWoundable, out WoundableComponent? oldParentWoundable) ||
+        PredictedQueueDel(wound);
+
+        if (!TryComp(wound.Comp.HoldingWoundable, out WoundableComponent? oldParentWoundable) ||
             !TryComp(oldParentWoundable.RootWoundable, out WoundableComponent? oldWoundableRoot))
             return;
 
-        wound.HoldingWoundable = EntityUid.Invalid;
+        wound.Comp.HoldingWoundable = EntityUid.Invalid;
 
         var ev = new WoundRemovedEvent(wound, oldParentWoundable, oldWoundableRoot);
-        RaiseLocalEvent(wound.HoldingWoundable, ref ev);
-
-        if (_net.IsServer && !IsClientSide(woundableEntity))
-            QueueDel(woundableEntity);
+        RaiseLocalEvent(wound, ref ev);
     }
 
-    private void OnWoundableInserted(EntityUid parentEntity, WoundableComponent parentWoundable, EntInsertedIntoContainerMessage args)
+    private void OnWoundableInserted(Entity<WoundableComponent> parent, ref OrganInsertedIntoPartEvent args)
     {
-        if (!TryComp<WoundableComponent>(args.Entity, out var childWoundable)
-            || !_net.IsServer)
+        if (_timing.ApplyingState ||
+            !TryComp<WoundableComponent>(args.Organ, out var child))
             return;
 
-        InternalAddWoundableToParent(parentEntity, args.Entity, parentWoundable, childWoundable);
+        InternalAddWoundableToParent(parent, args.Organ, parent.Comp, child);
 
-        if (_body.GetBody(parentEntity) is {} body)
+        if (_body.GetBody(parent.Owner) is {} body)
             _trauma.UpdateBodyBoneAlert(body);
     }
 
-    private void OnWoundableRemoved(EntityUid parentEntity, WoundableComponent parentWoundable, EntRemovedFromContainerMessage args)
+    private void OnWoundableRemoved(Entity<WoundableComponent> parent, ref OrganRemovedFromPartEvent args)
     {
-        if (!TryComp<WoundableComponent>(args.Entity, out var childWoundable)
-            || !_net.IsServer)
+        if (_timing.ApplyingState ||
+            !TryComp<WoundableComponent>(args.Organ, out var child))
             return;
 
-        InternalRemoveWoundableFromParent(parentEntity, args.Entity, parentWoundable, childWoundable);
+        InternalRemoveWoundableFromParent(parent, args.Organ, parent.Comp, child);
 
-        if (_body.GetBody(parentEntity) is {} body)
+        if (_body.GetBody(parent.Owner) is {} body)
             _trauma.UpdateBodyBoneAlert(body);
     }
 
@@ -239,19 +235,6 @@ public sealed partial class WoundSystem
 
         //TryMakeScar(wound, out _, woundComponent); // disabled as there is no way to heal scars currently?
         RemoveWound(wound, woundComponent);
-    }
-
-    private void OnWoundSeverityPointChanged(EntityUid uid, WoundComponent component, WoundSeverityPointChangedEvent args)
-    {
-        var delta = args.Overflow ?? args.NewSeverity - args.OldSeverity;
-
-        if (TerminatingOrDeleted(uid)
-            || TerminatingOrDeleted(component.HoldingWoundable)
-            || !TryComp<WoundableComponent>(component.HoldingWoundable, out var woundable)
-            || woundable.WoundableSeverity != WoundableSeverity.Mangled)
-            return;
-
-        DestroyWoundable(component.HoldingWoundable, component.HoldingWoundable, woundable);
     }
 
     private void OnDamageChanged(EntityUid uid, WoundableComponent component, ref DamageChangedEvent args)
@@ -722,9 +705,6 @@ public sealed partial class WoundSystem
             return;
         }
 
-        //if (bodyPart.ToHumanoidLayers() == null) // TODO SHITMED: wtf is this why
-        //    return;
-
         // if wounds amount somehow changes it triggers an enumeration error. owch
         woundableComp.WoundableSeverity = WoundableSeverity.Severed;
 
@@ -1134,7 +1114,6 @@ public sealed partial class WoundSystem
             || TerminatingOrDeleted(parentEntity))
             return;
 
-        Log.Debug($"Removing woundable {ToPrettyString(childEntity)} from {ToPrettyString(parentEntity)}");
         parentWoundable.ChildWoundables.Remove(childEntity);
         childWoundable.ParentWoundable = null;
         childWoundable.RootWoundable = childEntity;

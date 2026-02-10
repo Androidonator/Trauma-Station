@@ -9,6 +9,11 @@ namespace Content.Medical.Common.Body;
 public abstract class CommonBodyPartSystem : EntitySystem
 {
     /// <summary>
+    /// Get a list of every body part matching a given type and symmetry.
+    /// </summary>
+    public abstract List<EntityUid> GetBodyParts(EntityUid body, BodyPartType? partType, BodyPartSymmetry? symmetry = null);
+
+    /// <summary>
     /// Tries to add an organ slot to this bodypart.
     /// The slot can be for an internal or external organ.
     /// </summary>

@@ -33,8 +33,6 @@ public sealed class SurgerySystem : SharedSurgerySystem
     [Dependency] private readonly WoundSystem _wounds = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
-    private readonly Dictionary<NetEntity, List<EntProtoId>> _surgeries = new();
-
     public override void Initialize()
     {
         base.Initialize();
@@ -49,7 +47,7 @@ public sealed class SurgerySystem : SharedSurgerySystem
 
     protected override void RefreshUI(EntityUid body)
     {
-        _surgeries.Clear();
+        var surgeries = new Dictionary<NetEntity, List<EntProtoId>>();
         foreach (var part in _body.GetExternalOrgans(body))
         {
             var valid = new List<EntProtoId>();
@@ -66,9 +64,9 @@ public sealed class SurgerySystem : SharedSurgerySystem
 
                 valid.Add(surgery);
             }
-            _surgeries[GetNetEntity(part)] = valid;
+            surgeries[GetNetEntity(part)] = valid;
         }
-        _ui.SetUiState(body, SurgeryUIKey.Key, new SurgeryBuiState(_surgeries));
+        _ui.SetUiState(body, SurgeryUIKey.Key, new SurgeryBuiState(surgeries));
         /*
             TODO SHITMED: fuck you mocho, investigate why this actually happens
             Reason we do this is because when applying a BUI State, it rolls back the state on the entity temporarily,

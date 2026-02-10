@@ -54,7 +54,6 @@ using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
 using Content.Shared.Body;
-using Content.Shared.DetailExaminable;
 using Content.Shared.Emp;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Gravity;
@@ -168,9 +167,6 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
 
     public static readonly EntProtoId ArmorPrototype = "ChangelingClothingOuterArmor";
     public static readonly EntProtoId ArmorHelmetPrototype = "ChangelingClothingHeadHelmet";
-
-    public static readonly ProtoId<OrganCategoryPrototype> EyesCategory = "Eyes";
-    public static readonly ProtoId<OrganCategoryPrototype> TorsoCategory = "Torso";
 
     public override void Initialize()
     {
@@ -585,10 +581,9 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
 
     public bool TryStealDNA(EntityUid uid, EntityUid target, ChangelingIdentityComponent comp, bool countObjective = false)
     {
-        if (!TryComp<HumanoidProfileComponent>(target, out var humanoid)
-        || !TryComp<DnaComponent>(target, out var dna)
+        if (!TryComp<DnaComponent>(target, out var dna)
         || !TryComp<FingerprintComponent>(target, out var fingerprint)
-        || !_visualBody.TryGatherMarkingsData(target, null, out var organs, out _, out var markings))
+        || _humanoid.CreateProfile(target) is not {} profile)
         {
             _popup.PopupEntity(Loc.GetString("changeling-sting-extract-fail-lesser"), uid, uid);
             return false;
@@ -602,29 +597,6 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
                 return false;
             }
         }
-
-        // god i love shitcode having 0 apis so i must write even more shitcode
-        var flavortext = CompOrNull<DetailExaminableComponent>(target)?.Content ?? string.Empty;
-        // THANK YOU FOR NOT STORING THESE ANYWHERE!!!!!
-        var eyeColor = organs.TryGetValue(EyesCategory, out var eye) ? eye.EyeColor : Color.Black;
-        var skinColor = organs.TryGetValue(TorsoCategory, out var torso) ? torso.SkinColor : Color.White;
-        var appearance = new HumanoidCharacterAppearance(eyeColor, skinColor, markings);
-        var profile = new HumanoidCharacterProfile(
-            Name(target),
-            flavortext,
-            humanoid.Species,
-            humanoid.Age,
-            humanoid.Sex,
-            humanoid.Gender,
-            appearance,
-            // not spawning player don't care about anything here
-            default!,
-            new(),
-            default!,
-            new(),
-            new(),
-            new(),
-            humanoid.BarkVoice);
 
         var data = new TransformData
         {

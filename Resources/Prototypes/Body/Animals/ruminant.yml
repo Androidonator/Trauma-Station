@@ -13,6 +13,14 @@
     solutions:
       stomach:
         maxVol: 80
+      # <Shitmed>
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 12
+        - ReagentId: Fat
+          Quantity: 3
+      # </Shitmed>
 
 - type: entity
   id: BaseMobRuminant

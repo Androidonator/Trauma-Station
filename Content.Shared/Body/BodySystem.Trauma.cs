@@ -2,7 +2,13 @@ using Content.Medical.Common.Body;
 using Content.Medical.Common.Targeting;
 using Content.Shared.Body;
 using Content.Shared.Humanoid.Markings;
+using Content.Shared.Mobs.Systems;
+using Content.Shared.Random.Helpers;
+using Content.Shared.Standing;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
+using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Shared.Body;
 
@@ -12,7 +18,11 @@ namespace Content.Shared.Body;
 public sealed partial class BodySystem
 {
     [Dependency] private readonly CommonBodyCacheSystem _cache = default!;
+    [Dependency] private readonly CommonBodyPartSystem _part = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly MobStateSystem _mob = default!;
+    [Dependency] private readonly StandingStateSystem _standing = default!;
 
     /// <summary>
     /// Body parts' organ categories.
@@ -90,7 +100,7 @@ public sealed partial class BodySystem
     /// <summary>
     /// Non-dogshit version of TryGetOrgansWithComponent
     /// </summary>
-    public List<Entity<T>> GetOrgans<T>(Entity<BodyComponent?> body, bool logMissing = true) where T : Component
+    public List<Entity<T>> GetOrgans<T>(Entity<BodyComponent?> body, bool logMissing = false) where T : Component
     {
         if (!_bodyQuery.Resolve(body, ref body.Comp, logMissing))
             return [];
@@ -102,19 +112,19 @@ public sealed partial class BodySystem
     /// <summary>
     /// Get all organs in a body, both internal and external.
     /// </summary>
-    public List<Entity<OrganComponent>> GetOrgans(Entity<BodyComponent?> body, bool logMissing = true)
+    public List<Entity<OrganComponent>> GetOrgans(Entity<BodyComponent?> body, bool logMissing = false)
         => GetOrgans<OrganComponent>(body, logMissing);
 
     /// <summary>
     /// Get all internal organs in a body.
     /// </summary>
-    public List<Entity<InternalOrganComponent>> GetInternalOrgans(Entity<BodyComponent?> body, bool logMissing = true)
+    public List<Entity<InternalOrganComponent>> GetInternalOrgans(Entity<BodyComponent?> body, bool logMissing = false)
         => GetOrgans<InternalOrganComponent>(body, logMissing);
 
     /// <summary>
     /// Get all external organs in a body.
     /// </summary>
-    public List<Entity<OrganComponent>> GetExternalOrgans(Entity<BodyComponent?> body, bool logMissing = true)
+    public List<Entity<OrganComponent>> GetExternalOrgans(Entity<BodyComponent?> body, bool logMissing = false)
     {
         var organs = GetOrgans(body, logMissing);
         organs.RemoveAll(organ => HasComp<InternalOrganComponent>(organ));
@@ -143,7 +153,7 @@ public sealed partial class BodySystem
     /// </summary>
     public float GetVitalBodyPartRatio(Entity<BodyComponent?> body)
     {
-        if (!_bodyQuery.Resolve(body, ref body.Comp) || body.Comp.Organs?.ContainedEntities is not {} organs)
+        if (!_bodyQuery.Resolve(body, ref body.Comp, false) || body.Comp.Organs?.ContainedEntities is not {} organs)
             return 0f;
 
         // TODO SHITMED: change vital to just be a bool on OrganCategoryPrototype
@@ -188,7 +198,7 @@ public sealed partial class BodySystem
     /// <summary>
     /// Converts Enums from Targeting system to their BodyPartType equivalent.
     /// </summary>
-    public (BodyPartType Type, BodyPartSymmetry Symmetry) ConvertTargetBodyPart(TargetBodyPart? targetPart)
+    public (BodyPartType, BodyPartSymmetry) ConvertTargetBodyPart(TargetBodyPart? targetPart)
     {
         return targetPart switch
         {
@@ -232,7 +242,7 @@ public sealed partial class BodySystem
     /// </summary>
     public bool InsertOrgan(Entity<BodyComponent?> body, Entity<OrganComponent?> organ)
     {
-        if (!_bodyQuery.Resolve(body, ref body.Comp) ||
+        if (!_bodyQuery.Resolve(body, ref body.Comp, false) ||
             !_organQuery.Resolve(organ, ref organ.Comp) ||
             body.Comp.Organs is not {} container)
             return false;
@@ -256,7 +266,7 @@ public sealed partial class BodySystem
     /// </summary>
     public bool RemoveOrgan(Entity<BodyComponent?> body, Entity<OrganComponent?> organ)
     {
-        if (!_bodyQuery.Resolve(body, ref body.Comp) ||
+        if (!_bodyQuery.Resolve(body, ref body.Comp, false) ||
             !_organQuery.Resolve(organ, ref organ.Comp) ||
             body.Comp.Organs is not {} container)
             return false;
@@ -276,7 +286,7 @@ public sealed partial class BodySystem
 
     public bool ReplaceOrgan(Entity<BodyComponent?> body, Entity<OrganComponent?> organ)
     {
-        if (!_bodyQuery.Resolve(body, ref body.Comp) ||
+        if (!_bodyQuery.Resolve(body, ref body.Comp, false) ||
             !_organQuery.Resolve(organ, ref organ.Comp) ||
             organ.Comp.Category is not {} category)
             return false;
@@ -300,6 +310,8 @@ public sealed partial class BodySystem
     }
 
     // no marking api anymore lol have to write one myself
+    #region Markings
+
     /// <summary>
     /// Adds a marking to an organ with a given category, not allowing duplicates on the same organ.
     /// It will have default colours.
@@ -360,4 +372,104 @@ public sealed partial class BodySystem
         Dirty(organ, organ.Comp);
         return true;
     }
+
+    #endregion
+
+    #region Targeting
+
+    /// <summary>
+    /// This override fetches a random body part for an entity based on the attacker's selected part, which introduces a random chance to miss
+    /// so long as the entity isnt incapacitated or laying down.
+    /// </summary>
+    /// <param name="target"></param>
+    /// <param name="attacker"></param>
+    /// <param name="targetComp"></param>
+    /// <param name="attackerComp"></param>
+    /// <returns></returns>
+    public TargetBodyPart? GetRandomBodyPart(EntityUid target,
+        EntityUid attacker,
+        TargetingComponent? targetComp = null,
+        TargetingComponent? attackerComp = null)
+    {
+        if (!Resolve(target, ref targetComp, false)
+            || !Resolve(attacker, ref attackerComp, false))
+            return TargetBodyPart.Chest;
+
+        return GetRandomBodyPart(target, attackerComp.Target, targetComp);
+    }
+
+    public TargetBodyPart GetRandomBodyPart(EntityUid target,
+        TargetBodyPart targetPart = TargetBodyPart.Chest,
+        TargetingComponent? targetComp = null)
+    {
+        if (!Resolve(target, ref targetComp, false))
+            return TargetBodyPart.Chest;
+
+        if (_mob.IsIncapacitated(target)
+            || _standing.IsDown(target))
+            return targetPart;
+
+        var totalWeight = targetComp.TargetOdds[targetPart].Values.Sum();
+        var seed = SharedRandomExtensions.HashCodeCombine((int) _timing.CurTick.Value, GetNetEntity(target).Id);
+        var rand = new System.Random(seed);
+        var randomValue = rand.NextFloat() * totalWeight;
+
+        foreach (var (part, weight) in targetComp.TargetOdds[targetPart])
+        {
+            if (randomValue <= weight)
+                return part;
+            randomValue -= weight;
+        }
+
+        return TargetBodyPart.Chest;
+    }
+
+    public TargetBodyPart GetRandomBodyPart(EntityUid target)
+    {
+        var children = GetVitalParts(target);
+        if (children.Count == 0)
+            return TargetBodyPart.Chest;
+
+        var seed = SharedRandomExtensions.HashCodeCombine((int) _timing.CurTick.Value, GetNetEntity(target).Id);
+        var rand = new System.Random(seed);
+        return _part.GetTargetBodyPart(rand.Pick(children)) ?? TargetBodyPart.Chest;
+    }
+
+    public TargetBodyPart GetRandomBodyPart(EntityUid target,
+        EntityUid? attacker,
+        TargetBodyPart? targetPart = null,
+        TargetingComponent? targetComp = null)
+    {
+        if (!Resolve(target, ref targetComp, false))
+            return TargetBodyPart.Chest;
+
+        if (targetPart.HasValue)
+            return GetRandomBodyPart(target, targetPart: targetPart.Value);
+
+        if (attacker.HasValue
+            && TryComp(attacker.Value, out TargetingComponent? attackerComp))
+            return GetRandomBodyPart(target, targetPart: attackerComp.Target);
+
+        return GetRandomBodyPart(target);
+    }
+
+    public TargetBodyPart GetTargetBodyPart(EntityUid target,
+        EntityUid? attacker,
+        TargetBodyPart? targetPart = null,
+        TargetingComponent? targetComp = null)
+    {
+        if (!Resolve(target, ref targetComp, false))
+            return TargetBodyPart.Chest;
+
+        if (targetPart.HasValue)
+            return targetPart.Value;
+
+        if (attacker.HasValue
+            && TryComp(attacker.Value, out TargetingComponent? attackerComp))
+            return attackerComp.Target;
+
+        return GetRandomBodyPart(target);
+    }
+
+    #endregion
 }

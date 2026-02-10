@@ -53,3 +53,15 @@ public sealed partial class BodyPartComponent : Component, ISurgeryToolComponent
     [DataField]
     public string ContainerId = "body_part_organs";
 }
+
+/// <summary>
+/// Raised on a bodypart after an organ/child part was inserted into it.
+/// </summary>
+[ByRefEvent]
+public record struct OrganInsertedIntoPartEvent(EntityUid Organ, ProtoId<OrganCategoryPrototype> Category);
+
+/// <summary>
+/// Raised on a bodypart after an organ/child part was removed from it.
+/// </summary>
+[ByRefEvent]
+public record struct OrganRemovedFromPartEvent(EntityUid Organ, ProtoId<OrganCategoryPrototype> Category);

@@ -40,12 +40,20 @@ public sealed partial class WizardMirrorWindow : FancyWindow
 
     public HashSet<ProtoId<SpeciesPrototype>>? AllowedSpecies;
 
+    public const int TraitsTab = 3;
+    public const int JobsTab = 1;
+
     public WizardMirrorWindow()
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
         // use ioc you fucking monkey
         Editor = new HumanoidProfileEditor(_prefs, _cfg, _entMan, _dialog, _log, _player, _proto, _res, _jobReq, _marking);
+        // hide Traits (3), Antags (2), Jobs (1) tabs
+        for (int i = TraitsTab; i >= JobsTab; i--)
+        {
+            TabContainer.SetTabVisible(Editor.TabContainer.GetChild(i), false);
+        }
         AddChild(Editor);
     }
 }

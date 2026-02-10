@@ -21,14 +21,15 @@ public sealed partial class PartStatusControl : UIWidget
     [Dependency] private readonly IGameTiming _timing = default!;
 
     private readonly Dictionary<ProtoId<OrganCategoryPrototype>, TextureRect> _partStatusControls;
-    private readonly PartStatusUIController _controller;
+    private readonly PartStatusUIController _controller = default!;
+
+    public event Action? OnPartStatusClicked;
 
     public PartStatusControl()
     {
         IoCManager.InjectDependencies(this);
         RobustXamlLoader.Load(this);
 
-        _controller = UserInterfaceManager.GetUIController<PartStatusUIController>();
         _partStatusControls = new Dictionary<ProtoId<OrganCategoryPrototype>, TextureRect>
         {
             { "Head", DollHead },
@@ -44,6 +45,11 @@ public sealed partial class PartStatusControl : UIWidget
         };
         MouseFilter = MouseFilterMode.Stop;
         OnKeyBindDown += OnClicked;
+    }
+
+    public PartStatusControl(PartStatusUIController controller) : this()
+    {
+        _controller = controller;
     }
 
     public void SetTextures(Dictionary<ProtoId<OrganCategoryPrototype>, WoundableSeverity> state)
@@ -63,7 +69,7 @@ public sealed partial class PartStatusControl : UIWidget
     private void OnClicked(GUIBoundKeyEventArgs args)
     {
         if (_timing.IsFirstTimePredicted && args.Function == EngineKeyFunctions.Use)
-            _controller.GetPartStatusMessage();
+            OnPartStatusClicked?.Invoke();
     }
 
     public void SetVisible(bool visible) => this.Visible = visible;

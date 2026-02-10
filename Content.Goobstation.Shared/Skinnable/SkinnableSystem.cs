@@ -43,7 +43,7 @@ public sealed class SkinnableSystem : EntitySystem
         {
             Act = () => { StartSkinning(user, ent, used); },
             Text = Loc.GetString("skin-verb"),
-            Icon = new SpriteSpecifier.Rsi(new("/Textures/Mobs/Animals/monkey.rsi"), "monkey_skinned"),
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/_Trauma/Mobs/Animals/skinnedmonkey.rsi"), "monkey"),
             Priority = 1,
         });
     }

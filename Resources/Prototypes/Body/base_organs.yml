@@ -66,7 +66,9 @@
       sizes:
       - Tiny
       - Small
+  - type: UnremoveableOrgan # root part lol
   - type: Woundable
+    canRemove: false # root part
     integrity: 200
     integrityCap: 400 # Trauma - was 200
     thresholds:
@@ -75,6 +77,8 @@
       Severe: 60
       Critical: 30
       Mangled: 0
+  - type: WoundableVisuals
+    bleedingOverlay: _Shitmed/Mobs/Effects/bleeding_damage.rsi
   # </Shitmed>
   - type: Organ
     category: Torso
@@ -127,6 +131,8 @@
         Slash: 45
     traumaDeductions:
       Dismemberment: 0.5
+  - type: WoundableVisuals
+    bleedingOverlay: _Shitmed/Mobs/Effects/bleeding_damage.rsi
   # </Shitmed>
   - type: Organ
     category: Head
@@ -500,6 +506,14 @@
       Lung:
         maxVol: 100.0
         canReact: false
+      # <Shitmed>
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 12
+        - ReagentId: Fat
+          Quantity: 3
+      # </Shitmed>
   - type: Sprite
     layers:
     - state: lung-l
@@ -546,6 +560,14 @@
     solutions:
       stomach:
         maxVol: 50
+      # <Shitmed>
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 12
+        - ReagentId: Fat
+          Quantity: 3
+      # </Shitmed>
   - type: Metabolizer
     maxReagents: 3
     stages: [ Digestion ]

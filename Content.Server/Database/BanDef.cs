@@ -9,7 +9,7 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Database
 {
-    public sealed class BanDef
+    public sealed partial class BanDef // Trauma - made partial
     {
         public int? Id { get; }
         public BanType Type { get; }
@@ -117,8 +117,10 @@ namespace Content.Server.Database
                     : loc.GetString("ban-banned-permanent");
             }
 
+            // Trauma - add banned-by
             return $"""
                    {loc.GetString("ban-banned-1")}
+                   {loc.GetString("ban-banned-by", ("adminName", GetUsername(BanningAdmin?.ToString())))}
                    {loc.GetString("ban-banned-2", ("reason", Reason))}
                    {expires}
                    {loc.GetString("ban-banned-3")}

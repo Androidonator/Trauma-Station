@@ -15,8 +15,7 @@ public sealed partial class AddOrganSlot : EntityEffectBase<AddOrganSlot>
     public ProtoId<OrganCategoryPrototype> Category;
 
     public override string? EntityEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        // TODO NUBODY: localize OrganCategoryPrototype
-        => Loc.GetString("entity-effect-guidebook-part-add-slot", ("chance", Probability), ("slot", Category));
+        => Loc.GetString("entity-effect-guidebook-part-add-slot", ("chance", Probability), ("slot", prototype.Index(Category).Name));
 }
 
 public sealed class AddOrganSlotEffectSystem : EntityEffectSystem<BodyPartComponent, AddOrganSlot>

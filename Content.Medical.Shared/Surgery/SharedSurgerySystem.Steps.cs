@@ -278,7 +278,7 @@ public abstract partial class SharedSurgerySystem
         if (!TryComp(args.Surgery, out SurgeryOrganSlotConditionComponent? condition))
             return;
 
-        args.Cancelled |= !_part.CanInsertOrgan(args.Part, condition.OrganSlot);
+        args.Cancelled |= _part.HasOrganSlot(args.Part, condition.OrganSlot);
     }
 
     private void OnAffixPartStep(Entity<SurgeryAffixPartStepComponent> ent, ref SurgeryStepEvent args)
@@ -351,7 +351,8 @@ public abstract partial class SharedSurgerySystem
         // For now we naively assume that every entity will only have one of each organ type.
         // that we do surgery on, but in the future we'll need to reference their prototype somehow
         // to know if they need 2 hearts, 2 lungs, etc.
-        args.Cancelled |= _part.HasOrgan(args.Part, organComp.Organ);
+        // The step is completed if the part has the target organ.
+        args.Cancelled |= !_part.HasOrgan(args.Part, organComp.Organ);
     }
 
     private void OnAffixOrganStep(Entity<SurgeryAffixOrganStepComponent> ent, ref SurgeryStepEvent args)

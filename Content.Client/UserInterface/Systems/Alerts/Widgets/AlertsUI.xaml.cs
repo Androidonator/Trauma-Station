@@ -17,12 +17,9 @@ public sealed partial class AlertsUI : UIWidget
     // also known as Control.Children?
     private readonly Dictionary<AlertKey, AlertControl> _alertControls = new();
 
-    public static event Action<AlertsUI>? OnAlertsUICreated; // Trauma
-
     public AlertsUI()
     {
         RobustXamlLoader.Load(this);
-        OnAlertsUICreated?.Invoke(this); // Trauma - let other code add controls to it
     }
 
     public void SyncControls(AlertsSystem alertsSystem,

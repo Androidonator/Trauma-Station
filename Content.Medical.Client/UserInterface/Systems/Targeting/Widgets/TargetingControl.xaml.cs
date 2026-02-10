@@ -10,13 +10,13 @@ namespace Content.Medical.Client.UserInterface.Systems.Targeting.Widgets;
 [GenerateTypedNameReferences]
 public sealed partial class TargetingControl : UIWidget
 {
-    private readonly TargetingUIController _controller;
     private readonly Dictionary<TargetBodyPart, TextureButton> _bodyPartControls;
+
+    public event Action<TargetBodyPart>? OnSetTarget;
 
     public TargetingControl()
     {
         RobustXamlLoader.Load(this);
-        _controller = UserInterfaceManager.GetUIController<TargetingUIController>();
 
         _bodyPartControls = new Dictionary<TargetBodyPart, TextureButton>
         {
@@ -37,13 +37,11 @@ public sealed partial class TargetingControl : UIWidget
         foreach (var bodyPartButton in _bodyPartControls)
         {
             bodyPartButton.Value.MouseFilter = MouseFilterMode.Stop;
-            bodyPartButton.Value.OnPressed += _ => SetActiveBodyPart(bodyPartButton.Key);
+            bodyPartButton.Value.OnPressed += _ => OnSetTarget?.Invoke(bodyPartButton.Key);
 
             TargetDoll.Texture = Theme.ResolveTexture("target_doll");
         }
     }
-
-    private void SetActiveBodyPart(TargetBodyPart bodyPart) => _controller.CycleTarget(bodyPart);
 
     public void SetBodyPartsVisible(TargetBodyPart bodyPart)
     {

@@ -28,6 +28,7 @@ public sealed class LungTest
     containers:
       body_organs: !type:AllSelector
         children:
+        - id: OrganHumanTorso # Trauma
         - id: OrganHumanLungs
   - type: MobState
     allowedStates:

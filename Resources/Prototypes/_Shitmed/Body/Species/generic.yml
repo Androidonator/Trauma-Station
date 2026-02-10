@@ -40,7 +40,7 @@
 ## Parts
 
 - type: entity
-  parent: [ OrganBaseHead, OrganBioSynthExternal ]
+  parent: [ OrganBaseHeadSexed, OrganBaseHead, OrganBioSynthExternal ]
   id: OrganBioSynthHead
 
 - type: entity

@@ -26,13 +26,14 @@ public sealed partial class BodyPartSystem
     public List<Entity<BodyPartComponent>> GetBodyParts(Entity<BodyComponent?> body)
         => _body.GetOrgans<BodyPartComponent>(body);
 
-    /// <summary>
-    /// Get a list of every body part matching a given type and symmetry.
-    /// </summary>
-    public List<Entity<BodyPartComponent>> GetBodyParts(Entity<BodyComponent?> body, BodyPartType? partType, BodyPartSymmetry? symmetry = null)
+    public override List<EntityUid> GetBodyParts(EntityUid body, BodyPartType? partType, BodyPartSymmetry? symmetry = null)
     {
-        var parts = GetBodyParts(body);
-        parts.RemoveAll(part => !PartMatches(part, partType, symmetry));
+        var parts = new List<EntityUid>();
+        foreach (var part in GetBodyParts(body))
+        {
+            if (PartMatches(part.Comp, partType, symmetry))
+                parts.Add(part.Owner);
+        }
         return parts;
     }
 
@@ -56,7 +57,7 @@ public sealed partial class BodyPartSystem
     }
 
     public EntityUid? GetParentPart(Entity<ChildOrganComponent?> organ)
-        => _childQuery.Resolve(organ, ref organ.Comp) ? organ.Comp.Parent : null;
+        => _childQuery.Resolve(organ, ref organ.Comp, false) ? organ.Comp.Parent : null;
 
     /// <summary>
     /// Get the outermost organ for the given organ.
@@ -197,7 +198,7 @@ public sealed partial class BodyPartSystem
         if (!_query.Resolve(part, ref part.Comp) ||
             _body.GetCategory(organ) is not {} category ||
             // couldnt' be inserted anyway
-            part.Comp.Slots.Contains(category))
+            !part.Comp.Slots.Contains(category))
             return false;
 
         if (_body.GetBody(part.Owner) is {} body)

@@ -187,10 +187,8 @@ public sealed partial class DamageableSystem
             var appliedVitalDamage = ApplyDamageToBodyParts(ent, vitalDamage, origin, ignoreResistances,
                 interruptsDoAfters, TargetBodyPart.Vital, partMultiplier, ignoreBlockers, splitDamage, canMiss, increaseOnly);
 
-            if (appliedDamage != null)
-                damageDone += appliedDamage;
-            if (appliedVitalDamage != null)
-                damageDone += appliedVitalDamage;
+            damageDone += appliedDamage;
+            damageDone += appliedVitalDamage;
 
             return damageDone;
         }

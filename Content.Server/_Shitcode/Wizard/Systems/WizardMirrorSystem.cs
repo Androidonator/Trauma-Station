@@ -28,7 +28,6 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly GrammarSystem _grammar = default!;
-    [Dependency] private readonly HumanoidProfileSystem _humanoid = default!;
     [Dependency] private readonly MarkingManager _markingManager = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
     [Dependency] private readonly MindSystem _mind = default!;
@@ -49,6 +48,7 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
 
     private void OnMessage(Entity<WizardMirrorComponent> ent, ref WizardMirrorMessage args)
     {
+        Log.Debug($"Mirror message for {ToPrettyString(ent.Comp.Target)}");
         if (!TryComp(ent.Comp.Target, out HumanoidProfileComponent? humanoid))
             return;
 
@@ -110,7 +110,7 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
         }
 
         _meta.SetEntityName(target, profile.Name);
-        _humanoid.ApplyProfileTo((target, humanoid), profile);
+        Humanoid.ApplyProfileTo((target, humanoid), profile);
         _visualBody.ApplyProfileTo(target, profile);
 
         if (_mind.TryGetMind(target, out var mind, out _) && TryComp(mind, out SoulBoundComponent? soulBound))

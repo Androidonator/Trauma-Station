@@ -95,3 +95,5 @@
         type: HumanoidMarkingModifierBoundUserInterface
       enum.StrippingUiKey.Key:
         type: StrippableBoundUserInterface
+      enum.StoreUiKey.Key: # Goob - changelings
+        type: StoreBoundUserInterface

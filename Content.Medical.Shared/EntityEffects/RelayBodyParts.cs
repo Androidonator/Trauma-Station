@@ -51,7 +51,7 @@ public sealed class RelayBodyPartsEffectSystem : EntityEffectSystem<BodyComponen
         var effects = effect.Effects;
         var partType = effect.PartType;
         var symmetry = effect.Symmetry;
-        foreach (var (part, _) in _part.GetBodyParts(ent.AsNullable(), partType, symmetry))
+        foreach (var part in _part.GetBodyParts(ent.AsNullable(), partType, symmetry))
         {
             _effects.ApplyEffects(part, effects, args.Scale);
         }

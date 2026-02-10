@@ -69,10 +69,10 @@ public sealed class ExplosiveShockSystem : EntitySystem
 
         // gloves go under armor so ignore resistances
         foreach (var part in _part.GetBodyParts(target, BodyPartType.Hand))
-            _damageable.ChangeDamage(part.Owner, explosiveShock.HandsDamage, true);
+            _damageable.ChangeDamage(part, explosiveShock.HandsDamage, true);
 
         foreach (var part in _part.GetBodyParts(target, BodyPartType.Arm))
-            _damageable.ChangeDamage(part.Owner, explosiveShock.ArmsDamage, true);
+            _damageable.ChangeDamage(part, explosiveShock.ArmsDamage, true);
 
         _stun.TryKnockdown(target, explosiveShock.KnockdownTime, true);
     }

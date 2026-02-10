@@ -78,6 +78,15 @@ MachineFTLDriveHighCircuitboard: null
 # 2026-01-29 migrate away water vapor tanks because some chud mapped it
 DoubleEmergencyWaterVaporTankFilled: DoubleEmergencyOxygenTankFilled
 LockerShaftMinerFilledHardsuit: LockerSalvageSpecialistFilledHardsuit
+
+# 2026-02-12 renamed a bunch of organs
+BasicCyberneticEyes: OrganCyberneticEyes
+DiagnosticCyberneticEyes: OrganCyberneticEyesDiagnostic
+MedicalCyberneticEyes: OrganCyberneticEyesMedical
+SecurityCyberneticEyes: OrganCyberneticEyesSecurity
+BioSynthHeart: OrganBioSynthHeart
+ChestSkeleton: OrganSkeletonPersonTorso
+ChestHuman: OrganHumanTorso
 # </Trauma>
 
 # Goobstation - Submarine from DeltaV

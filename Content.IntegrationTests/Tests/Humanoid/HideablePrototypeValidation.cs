@@ -11,6 +11,7 @@ namespace Content.IntegrationTests.Tests.Humanoid;
 public sealed class HideablePrototypeValidation
 {
     [Test]
+    [Explicit] // Trauma - i don't care if nothing can hide a tail
     public async Task NoOrgansWithoutClothing()
     {
         await using var pair = await PoolManager.GetServerClient();

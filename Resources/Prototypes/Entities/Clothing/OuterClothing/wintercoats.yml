@@ -265,6 +265,11 @@
   - type: ToggleableClothing # Goobstation - Modsuits change
     clothingPrototypes:
       head: ClothingHeadHatHoodWinterHOS
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:Container # Trauma - non-slot
+      storagebase: !type:Container
+        ents: [ ]
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Cloth: 250
@@ -509,6 +514,11 @@
   - type: ToggleableClothing # Goobstation - Modsuits change
     clothingPrototypes:
       head: ClothingHeadHatHoodWinterWarden
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:Container # Trauma - non-slot
+      storagebase: !type:Container
+        ents: [ ]
   - type: PhysicalComposition #Goobstation - Recycle update
     materialComposition:
       Cloth: 250

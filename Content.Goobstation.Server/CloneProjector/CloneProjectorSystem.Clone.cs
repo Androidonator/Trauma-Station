@@ -32,8 +32,7 @@ public partial class CloneProjectorSystem
 
     private void OnInit(Entity<HolographicCloneComponent> clone, ref MapInitEvent args)
     {
-        _body.TryGetOrgansWithComponent<WoundableComponent>(clone.Owner, out var parts);
-        foreach (var part in parts)
+        foreach (var part in _body.GetOrgans<WoundableComponent>(clone.Owner))
         {
             part.Comp.CanRemove = false;
             part.Comp.CanBleed = false;

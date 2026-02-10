@@ -8,6 +8,7 @@ using Content.Medical.Shared.PartStatus;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Utility;
 using Robust.Shared.Timing;
@@ -18,17 +19,34 @@ public sealed class PartStatusUIController : UIController, IOnStateEntered<Gamep
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IEntityNetworkManager _entNet = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
     private SpriteSystem _sprite = default!;
 
     private BodyStatusComponent? _comp;
-    private PartStatusControl? PartStatusControl => UIManager.GetActiveUIWidgetOrNull<PartStatusControl>();
+    private PartStatusControl? PartStatusControl;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        UIManager.OnScreenChanged += screens =>
+        {
+            try
+            {
+                if (screens.New?.FindControl<AlertsUI>("Alerts") is {} alerts)
+                    AddPartStatusToAlerts(alerts);
+            }
+            catch (ArgumentException)
+            {
+                // don't care if it's a non-game screen or whatever
+                // dogshit api has no nullable method :)
+            }
+        };
+    }
 
     public void OnSystemLoaded(TargetingSystem system)
     {
-        AlertsUI.OnAlertsUICreated += AddPartStatusToAlerts;
-
         system.PartStatusStartup += UpdatePartStatusControl;
         system.PartStatusShutdown += RemovePartStatusControl;
         system.PartStatusUpdate += UpdatePartStatusControl;
@@ -36,8 +54,6 @@ public sealed class PartStatusUIController : UIController, IOnStateEntered<Gamep
 
     public void OnSystemUnloaded(TargetingSystem system)
     {
-        AlertsUI.OnAlertsUICreated -= AddPartStatusToAlerts;
-
         system.PartStatusStartup -= UpdatePartStatusControl;
         system.PartStatusShutdown -= RemovePartStatusControl;
         system.PartStatusUpdate -= UpdatePartStatusControl;
@@ -45,7 +61,12 @@ public sealed class PartStatusUIController : UIController, IOnStateEntered<Gamep
 
     private void AddPartStatusToAlerts(AlertsUI alerts)
     {
-        alerts.AddChild(new PartStatusControl());
+        PartStatusControl?.Orphan();
+        var control = new PartStatusControl(this);
+        control.OnPartStatusClicked += GetPartStatusMessage;
+        PartStatusControl = control;
+        alerts.PartStatus.AddChild(control);
+        UpdateVisibility();
     }
 
     public void OnStateEntered(GameplayState state)
@@ -86,7 +107,6 @@ public sealed class PartStatusUIController : UIController, IOnStateEntered<Gamep
     {
         if (_player.LocalEntity is not {} user
             || !_entMan.HasComponent<BodyStatusComponent>(user)
-            || PartStatusControl == null
             || !_timing.IsFirstTimePredicted)
             return;
 

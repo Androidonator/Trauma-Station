@@ -7,5 +7,5 @@
   components:
   - type: BodyPart
     slots:
-    - Brain # sentient slime core
+    - Stomach # sentient slime core
     - Lungs # slime lungs
