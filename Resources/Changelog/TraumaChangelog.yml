@@ -2504,3 +2504,12 @@ Entries:
   id: 302
   time: '2026-02-14T21:52:41.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/692
+- author: deltanedas
+  changes:
+  - type: Add
+    message: Tails are now bodyparts and can be removed by surgery, explosions, etc.
+  - type: Add
+    message: 'You can now create a tail joint via surgery to turn people into lizards. '
+  id: 303
+  time: '2026-02-15T21:13:47.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/696
