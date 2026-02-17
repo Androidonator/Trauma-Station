@@ -2584,3 +2584,10 @@ Entries:
   id: 310
   time: '2026-02-17T14:42:13.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/714
+- author: Kirikii
+  changes:
+  - type: Tweak
+    message: Changed round end summary for heretics slightly.
+  id: 311
+  time: '2026-02-17T19:52:12.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/720
