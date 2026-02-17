@@ -2577,3 +2577,10 @@ Entries:
   id: 309
   time: '2026-02-17T13:09:56.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/711
+- author: JohnJJohn
+  changes:
+  - type: Fix
+    message: Fixed Deep fryer being in migration for some reason
+  id: 310
+  time: '2026-02-17T14:42:13.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/714
