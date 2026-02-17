@@ -2598,3 +2598,12 @@ Entries:
   id: 312
   time: '2026-02-17T20:11:36.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/722
+- author: deltanedas
+  changes:
+  - type: Fix
+    message: Fixed mutations with actions giving you 2 of them.
+  - type: Add
+    message: Geneticist traitors can now buy FOXDIE.
+  id: 313
+  time: '2026-02-17T21:38:27.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/723
